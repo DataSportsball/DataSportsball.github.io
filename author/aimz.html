@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Adventures in sportsball data - Aimz</title>
+        <link rel="stylesheet" href="http://username.github.io/theme/css/main.css" />
+        <link href="http://username.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in sportsball data Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://username.github.io/">Adventures in sportsball data </a></h1>
+                <nav><ul>
+                    <li><a href="http://username.github.io/category/ahl.html">AHL</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="http://username.github.io/Mucking around with stats from AHL.html">AHL Stats Part 1 - Scoring shots</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-11-28T20:00:00+11:00">
+                Published: Wed 28 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="http://username.github.io/author/aimz.html">Aimz</a>
+        </address>
+<p>In <a href="http://username.github.io/category/ahl.html">AHL</a>.</p>
+<p>tags: <a href="http://username.github.io/tag/python-data.html">python data</a> </p>
+</footer><!-- /.post-info --><style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph > img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Hello-World!"><strong>Hello World!</strong><a class="anchor-link" href="#Hello-World!">&#182;</a></h2><p>Two weeks ago, on a rocking Saturday night, I got somewhat irrationally upset by the presentation of statistical analysis in Hockey Australia's <a href="http://www.hockey.org.au/News/statistics-reveal-goals-per-game-spike-in-2018-ahl">breakdown</a> of this year's Australian Hockey League (for field hockey - sorry for any Americans who accidentally stumbled on this when looking for the American one). Being a data nerd, I tracked down some data to see if I could present it in a visually informative way. Several rabbit holes (and a number of interesting finds) later, I figured I should apply some self-discipline and blog for the first time in my life.</p>
+<p>I've got enough content on AHL for a few blogs, so I'll slowly share them as I polish it up. In this first post, I'll quickly explain some caveats on my analysis before diving into some pretty pictures breaking down the scoring actions (ie: kinds of goals) scored across the men's and women's competitions.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-bit-more-on-why">A bit more on why<a class="anchor-link" href="#A-bit-more-on-why">&#182;</a></h2><p>When I say I got irrationally angry at HA's analysis, I should stress there is nothing wrong with what they've done. It's interesting information, and after poking around in their data I can see how much of a mammoth effort it is to produce those statistics. However, it's difficult for human beings to mentally compare numbers when presented with text (especially when you change between digits and numbers as words!). I really love hockey, and I think you can tell really interesting stories with data when you present it in the right way. So, here are some other ways to present the same data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-data-have-I-used?">What data have I used?<a class="anchor-link" href="#What-data-have-I-used?">&#182;</a></h2><p>I've downloaded all of the match reports from Altiusrt <a href="https://hockeyaustralia.altiusrt.com/competitions/200">here</a> and <a href="https://hockeyaustralia.altiusrt.com/competitions/201">here</a>. All of the data I've used came from those reports, and the code I used to pull it apart and turn it into stats-friendly format is <a href="https://github.com/DataSportsball/AHL_stats">here</a>.</p>
+<p>I don't think I'm drawing on the same cut of data as Hockey Australia. As you can see below, I got slightly different counts for the kinds of goals scored (even though our overall totals match up nicely). I think this is due to scoring actions being recorded incorrectly in the match reports. For example, James Day's Penalty Stroke conversion (confirmed by the <a href="http://www.hockey.org.au/News/wins-for-all-states-last-gasp-tassie-winner">video highlights</a>) in the 2nd minute of the Round 2 match between ACT and QLD was recorded on the match report as a field goal in the 3rd minute. That example is the reason why I have one more field goal scored in the Men's competition, and one less conversion. However, I don't know where the correct data is, because <a href="https://hockeyaustralia.altiusrt.com/competitions/200#statistics">these statistics</a>  have also given Day a field goal and no conversion.</p>
+<p>Honestly, I don't care that much, other than to flag that my numbers may be slightly different to Hockey Australia's. It's probably also worth considering that there may be other statistics not recorded correctly that aren't immediately obvious.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="New-rules:-messing-with-data!">New rules: messing with data!<a class="anchor-link" href="#New-rules:-messing-with-data!">&#182;</a></h2><p>AHL had a couple of different <a href="http://www.hockey.org.au/News/a-simple-breakdown-of-the-2018-ahl-rule-innovations">scoring rules</a> for 2018. For someone watching (or, I imagine, playing) the sport, they were a bit weird. But they wreck even more havoc with measuring many of the features of the game. Do I count a PumpPlay score as 2 goals for the purpose of comparing it to others? How does a conversion fit into this? It matters because how you count it changes the total number of goals scored. For example, if you add up the scores of each game in the Women's competition, you get 155 goals. But if you count scoring actions (where PumpPlay goals count as one, but there is a separate score recorded for a field goal conversion) the total is 142.</p>
+<p>The rabbit holes I went down included trying to work out which one is better. Honestly, the answer is 'it depends', so I'll just declare what I'm doing and anyone who thinks that's wrong can do their own analysis. My code will be in this <a href="https://github.com/DataSportsball/AHL_stats">repo</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">HTML</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="k">import</span> <span class="n">viridis</span>
+<span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="k">import</span> <span class="n">value</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">FactorRange</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="k">import</span> <span class="n">output_notebook</span>
+<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="k">import</span> <span class="n">factor_cmap</span>
+<span class="kn">from</span> <span class="nn">bokeh.resources</span> <span class="k">import</span> <span class="n">CDN</span>
+<span class="kn">from</span> <span class="nn">bokeh.embed</span> <span class="k">import</span> <span class="n">file_html</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span>
+
+
+<span class="n">output_notebook</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+    <div class="bk-root">
+        <a href="https://bokeh.pydata.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+        <span id="8789f79f-6f34-46d0-b92e-ec363ca76155">Loading BokehJS ...</span>
+    </div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="a3040d80-2693-4e59-8411-65a1865b92c3"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#a3040d80-2693-4e59-8411-65a1865b92c3');
+
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof (root._bokeh_onload_callbacks) === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById("8789f79f-6f34-46d0-b92e-ec363ca76155");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) { callback() });
+    }
+    finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.info("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(js_urls, callback) {
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.log("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.log("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = js_urls.length;
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var s = document.createElement('script');
+      s.src = url;
+      s.async = false;
+      s.onreadystatechange = s.onload = function() {
+        root._bokeh_is_loading--;
+        if (root._bokeh_is_loading === 0) {
+          console.log("Bokeh: all BokehJS libraries loaded");
+          run_callbacks()
+        }
+      };
+      s.onerror = function() {
+        console.warn("failed to load library " + url);
+      };
+      console.log("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.getElementsByTagName("head")[0].appendChild(s);
+    }
+  };var element = document.getElementById("8789f79f-6f34-46d0-b92e-ec363ca76155");
+  if (element == null) {
+    console.log("Bokeh: ERROR: autoload.js configured with elementid '8789f79f-6f34-46d0-b92e-ec363ca76155' but no matching script tag was found. ")
+    return false;
+  }
+
+  var js_urls = ["https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-gl-0.13.0.min.js"];
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    
+    function(Bokeh) {
+      
+    },
+    function(Bokeh) {
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css");
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.css");
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.css");
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+        inline_js[i].call(root, root.Bokeh);
+      }if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById("8789f79f-6f34-46d0-b92e-ec363ca76155")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.log("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(js_urls, function() {
+      console.log("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;&lt;script&gt;</span>
+<span class="s1">code_show=true; </span>
+<span class="s1">function code_toggle() {</span>
+<span class="s1"> if (code_show){</span>
+<span class="s1"> $(&#39;div.input&#39;).hide();</span>
+<span class="s1"> } else {</span>
+<span class="s1"> $(&#39;div.input&#39;).show();</span>
+<span class="s1"> }</span>
+<span class="s1"> code_show = !code_show</span>
+<span class="s1">} </span>
+<span class="s1">$( document ).ready(code_toggle);</span>
+<span class="s1">&lt;/script&gt;</span>
+<span class="s1">This blog was produced from a Jupyter notebook. All of the code has been hidden by default.</span>
+<span class="s1">If you would like to see the code, click &lt;a href=&quot;javascript:code_toggle()&quot;&gt;here&lt;/a&gt;. Each code cell will then be available to expand.&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<script>
+code_show=true; 
+function code_toggle() {
+ if (code_show){
+ $('div.input').hide();
+ } else {
+ $('div.input').show();
+ }
+ code_show = !code_show
+} 
+$( document ).ready(code_toggle);
+</script>
+This blog was produced from a Jupyter notebook. All of the code has been hidden by default.
+If you would like to see the code, click <a href="javascript:code_toggle()">here</a>. Each code cell will then be available to expand.
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="k">def</span> <span class="nf">stacked_barchart</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">grouped</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x_axis</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span> 
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grouped</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">x</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Breakdown-of-scoring-actions">Breakdown of scoring actions<a class="anchor-link" href="#Breakdown-of-scoring-actions">&#182;</a></h2><p>To round out my first post, I'm going to breakdown the kinds of goals scored across the competition. In the HA breakdown, these numbers were across 3 separate bullet points (total, women's and men's). That makes it really hard to get a sense of how the numbers stack up against each other. So, I thought I'd try a few different ways of visually presenting the same information.</p>
+<h3 id="Counting-the-new-rules">Counting the new rules<a class="anchor-link" href="#Counting-the-new-rules">&#182;</a></h3><p>In this set of charts, I'm looking at scoring <strong>actions</strong>. That means a player put the ball in the back of the net. Obviously, a field goal or penalty stroke conversion is just that, so they have been left as is. However, PumpPlay goals are one scoring action, despite being worth two points. PumpPlay scores have been counted with the non-PumpPlay scoring shots of the same kind (with a value of 1). I have parked the remainder (ie, the 'bonus' goals) in a separate category, just to account for all of the scores in the competition.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;FG2&#39;</span><span class="p">:</span><span class="s1">&#39;PumpPlay Field Goal&#39;</span><span class="p">,</span> <span class="s1">&#39;PC1&#39;</span><span class="p">:</span> <span class="s1">&#39;Penalty Corner&#39;</span><span class="p">,</span> <span class="s1">&#39;FG1&#39;</span><span class="p">:</span><span class="s1">&#39;Field Goal&#39;</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">:</span><span class="s1">&#39;PumpPlay Penalty Corner&#39;</span><span class="p">,</span> <span class="s1">&#39;FC1&#39;</span><span class="p">:</span> <span class="s1">&#39;Field Goal Conversion&#39;</span><span class="p">,</span> <span class="s1">&#39;PS1&#39;</span><span class="p">:</span><span class="s1">&#39;Penalty Stroke&#39;</span><span class="p">,</span> <span class="s1">&#39;PS2&#39;</span><span class="p">:</span><span class="s1">&#39;PumpPlay penalty stroke&#39;</span><span class="p">}</span>
+<span class="n">competition_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="s1">&#39;Men&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="s1">&#39;Women&#39;</span><span class="p">}</span>
+
+<span class="n">goals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;goals_master.csv&quot;</span><span class="p">)</span>
+<span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Minute&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Minute&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">)))</span>
+<span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">competition_map</span><span class="p">)</span>
+<span class="n">double</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">)</span>
+<span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">action_map</span><span class="p">)</span>
+<span class="n">double</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;PumpPlay bonus&quot;</span>
+<span class="n">goals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">goals</span><span class="p">,</span> <span class="n">double</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualisation-1:-Goals-scored,-by-scoring-action">Visualisation 1: Goals scored, by scoring action<a class="anchor-link" href="#Visualisation-1:-Goals-scored,-by-scoring-action">&#182;</a></h2><p>First up, let's do a quick breakdown of the kinds of goals scored, with the bars stacked by the different competitions. This is exactly the same information as Hockey Australia's breakdown. I just think it looks better...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">,</span> <span class="s1">&#39;Comp&#39;</span><span class="p">])[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">comps</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total goals scored&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;$name: @$name&quot;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar_stack</span><span class="p">(</span><span class="n">comps</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">source</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">comps</span><span class="p">])</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Scoring action&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+<span class="n">myplot_html</span> <span class="o">=</span> <span class="n">file_html</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">CDN</span><span class="p">)</span>
+
+<span class="c1">#show(p)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="k">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">myplot_html</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>Bokeh Application</title>
+      
+      
+        
+          
+        <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" type="text/css" />
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            <div class="bk-root" id="3d1ccb74-74bf-4b15-8c51-b52141cb7a29"></div>
+          
+        
+      
+      
+        <script type="application/json" id="255c9db0-ce6b-4b29-a3bc-c0f59b4385e0">
+          {"431e9227-eb38-4c3b-989b-cc31268d7d8b":{"roots":{"references":[{"attributes":{"items":[{"id":"4f975aa6-bf76-460c-8012-cb3fb2f7a8d4","type":"LegendItem"},{"id":"8f07126d-d885-4c1b-845d-3bc2ea4710a5","type":"LegendItem"}],"plot":{"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"}},"id":"1b1ff4d2-c8f3-4f55-a148-2ac57d2799b0","type":"Legend"},{"attributes":{},"id":"e271b4d7-5471-4688-b2fa-3c33ea4b1414","type":"BasicTickFormatter"},{"attributes":{"data_source":{"id":"4f3d4467-60f0-4e48-8dfe-68c46901cc0b","type":"ColumnDataSource"},"glyph":{"id":"bcd5c3e9-d2d4-4ea7-a61d-a941867c99a6","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Women","nonselection_glyph":{"id":"d5587f73-bfe8-4c65-9f8b-c45f4818af5b","type":"VBar"},"selection_glyph":null,"view":{"id":"fd595e02-3557-4fc7-9172-ea1e921fd892","type":"CDSView"}},"id":"b6739e9f-3b3e-4922-8766-857fd132ede5","type":"GlyphRenderer"},{"attributes":{"bottom":{"expr":{"id":"f5637ac7-d913-467e-8c96-fa526b12b0e3","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"777a8338-a04f-48fc-9012-dabb5d808628","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Action"}},"id":"d5587f73-bfe8-4c65-9f8b-c45f4818af5b","type":"VBar"},{"attributes":{},"id":"b59c574b-f0f7-4e49-90a8-786d999c5b32","type":"Selection"},{"attributes":{},"id":"9d4cf8d2-d352-4f1c-a4a2-e1e1cdd97acb","type":"CategoricalTickFormatter"},{"attributes":{"bottom":{"expr":{"id":"f5637ac7-d913-467e-8c96-fa526b12b0e3","type":"Stack"}},"fill_color":{"value":"#FDE724"},"line_color":{"value":"#FDE724"},"top":{"expr":{"id":"777a8338-a04f-48fc-9012-dabb5d808628","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Action"}},"id":"bcd5c3e9-d2d4-4ea7-a61d-a941867c99a6","type":"VBar"},{"attributes":{"callback":null,"data":{"Action":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"],"Men":[99,60,35,2,12],"Women":[68,40,24,10,13]},"selected":{"id":"b59c574b-f0f7-4e49-90a8-786d999c5b32","type":"Selection"},"selection_policy":{"id":"6fc52c3d-624a-4a77-abdd-350cc221e8b0","type":"UnionRenderers"}},"id":"f6d1192c-f7b7-4c00-8e2e-b68571959494","type":"ColumnDataSource"},{"attributes":{"source":{"id":"4f3d4467-60f0-4e48-8dfe-68c46901cc0b","type":"ColumnDataSource"}},"id":"fd595e02-3557-4fc7-9172-ea1e921fd892","type":"CDSView"},{"attributes":{"source":{"id":"f6d1192c-f7b7-4c00-8e2e-b68571959494","type":"ColumnDataSource"}},"id":"ae3ee518-dfe6-47c7-b492-4ace1d4f4c29","type":"CDSView"},{"attributes":{},"id":"90f2131c-19ae-4665-b996-f55ad17434af","type":"CategoricalScale"},{"attributes":{},"id":"6fc52c3d-624a-4a77-abdd-350cc221e8b0","type":"UnionRenderers"},{"attributes":{"dimension":1,"plot":{"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"},"ticker":{"id":"8ef90879-9ae0-47e2-ad05-34c2af39c159","type":"BasicTicker"}},"id":"0a119b74-43e4-4d8b-bc72-bc4919ee7326","type":"Grid"},{"attributes":{"label":{"value":"Women"},"renderers":[{"id":"b6739e9f-3b3e-4922-8766-857fd132ede5","type":"GlyphRenderer"}]},"id":"8f07126d-d885-4c1b-845d-3bc2ea4710a5","type":"LegendItem"},{"attributes":{},"id":"8ef90879-9ae0-47e2-ad05-34c2af39c159","type":"BasicTicker"},{"attributes":{"fields":["Men"]},"id":"8dd5fe34-f47d-4b10-b15b-6d770b3e57ef","type":"Stack"},{"attributes":{"plot":{"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"},"ticker":{"id":"3060f764-3ad4-4d64-9579-161c4cc0d256","type":"CategoricalTicker"}},"id":"ab820b50-2bfb-4534-84e8-a5be6a304414","type":"Grid"},{"attributes":{},"id":"a6b721c1-e2e6-4f5b-92a5-34e342c54b63","type":"Selection"},{"attributes":{},"id":"079c77ec-c0f4-449d-8b33-2ec17dad2718","type":"LinearScale"},{"attributes":{"plot":null,"text":"Total goals scored"},"id":"ec307ca5-bf40-4e8e-943b-bd26033201da","type":"Title"},{"attributes":{"label":{"value":"Men"},"renderers":[{"id":"25e3b1d2-e536-4416-b131-7acac0b25e64","type":"GlyphRenderer"}]},"id":"4f975aa6-bf76-460c-8012-cb3fb2f7a8d4","type":"LegendItem"},{"attributes":{"fields":["Men","Women"]},"id":"777a8338-a04f-48fc-9012-dabb5d808628","type":"Stack"},{"attributes":{},"id":"2cb293a6-d431-40bc-b226-5cbcb025d9d6","type":"UnionRenderers"},{"attributes":{"fields":["Men"]},"id":"f5637ac7-d913-467e-8c96-fa526b12b0e3","type":"Stack"},{"attributes":{"below":[{"id":"ec91ee5e-2f9c-44d3-8815-977b221119bc","type":"CategoricalAxis"}],"left":[{"id":"1deef49e-33bd-47e2-b5a4-e13e616eaa62","type":"LinearAxis"}],"renderers":[{"id":"ec91ee5e-2f9c-44d3-8815-977b221119bc","type":"CategoricalAxis"},{"id":"ab820b50-2bfb-4534-84e8-a5be6a304414","type":"Grid"},{"id":"1deef49e-33bd-47e2-b5a4-e13e616eaa62","type":"LinearAxis"},{"id":"0a119b74-43e4-4d8b-bc72-bc4919ee7326","type":"Grid"},{"id":"1b1ff4d2-c8f3-4f55-a148-2ac57d2799b0","type":"Legend"},{"id":"25e3b1d2-e536-4416-b131-7acac0b25e64","type":"GlyphRenderer"},{"id":"b6739e9f-3b3e-4922-8766-857fd132ede5","type":"GlyphRenderer"}],"title":{"id":"ec307ca5-bf40-4e8e-943b-bd26033201da","type":"Title"},"toolbar":{"id":"c991883f-1159-45fe-8444-39775a798a40","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"13d15ef1-71c9-40a4-9b6d-3ca2296b3517","type":"FactorRange"},"x_scale":{"id":"90f2131c-19ae-4665-b996-f55ad17434af","type":"CategoricalScale"},"y_range":{"id":"4f264ffd-d954-432f-baf1-79b9b30aabe3","type":"DataRange1d"},"y_scale":{"id":"079c77ec-c0f4-449d-8b33-2ec17dad2718","type":"LinearScale"}},"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"},{"attributes":{"data_source":{"id":"f6d1192c-f7b7-4c00-8e2e-b68571959494","type":"ColumnDataSource"},"glyph":{"id":"e174f8b7-6f84-4d35-96ac-615ca595407d","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Men","nonselection_glyph":{"id":"6f323c75-8cf1-47c5-86f2-a5fe76c97ec1","type":"VBar"},"selection_glyph":null,"view":{"id":"ae3ee518-dfe6-47c7-b492-4ace1d4f4c29","type":"CDSView"}},"id":"25e3b1d2-e536-4416-b131-7acac0b25e64","type":"GlyphRenderer"},{"attributes":{"callback":null},"id":"4f264ffd-d954-432f-baf1-79b9b30aabe3","type":"DataRange1d"},{"attributes":{},"id":"3060f764-3ad4-4d64-9579-161c4cc0d256","type":"CategoricalTicker"},{"attributes":{"axis_label":"Total","formatter":{"id":"e271b4d7-5471-4688-b2fa-3c33ea4b1414","type":"BasicTickFormatter"},"plot":{"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"},"ticker":{"id":"8ef90879-9ae0-47e2-ad05-34c2af39c159","type":"BasicTicker"}},"id":"1deef49e-33bd-47e2-b5a4-e13e616eaa62","type":"LinearAxis"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"f4dc599a-3ba6-4e19-bc4f-5a46f0a3f5dd","type":"HoverTool"}]},"id":"c991883f-1159-45fe-8444-39775a798a40","type":"Toolbar"},{"attributes":{"callback":null,"factors":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"]},"id":"13d15ef1-71c9-40a4-9b6d-3ca2296b3517","type":"FactorRange"},{"attributes":{"callback":null,"data":{"Action":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"],"Men":[99,60,35,2,12],"Women":[68,40,24,10,13]},"selected":{"id":"a6b721c1-e2e6-4f5b-92a5-34e342c54b63","type":"Selection"},"selection_policy":{"id":"2cb293a6-d431-40bc-b226-5cbcb025d9d6","type":"UnionRenderers"}},"id":"4f3d4467-60f0-4e48-8dfe-68c46901cc0b","type":"ColumnDataSource"},{"attributes":{"bottom":{"expr":{"id":"014fae5f-208f-4796-a9be-43295f2de51e","type":"Stack"}},"fill_color":{"value":"#440154"},"line_color":{"value":"#440154"},"top":{"expr":{"id":"8dd5fe34-f47d-4b10-b15b-6d770b3e57ef","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Action"}},"id":"e174f8b7-6f84-4d35-96ac-615ca595407d","type":"VBar"},{"attributes":{"axis_label":"Scoring action","formatter":{"id":"9d4cf8d2-d352-4f1c-a4a2-e1e1cdd97acb","type":"CategoricalTickFormatter"},"major_label_orientation":0.7853981633974483,"plot":{"id":"55dba242-4cdd-4a02-ae96-3e9238125c6b","subtype":"Figure","type":"Plot"},"ticker":{"id":"3060f764-3ad4-4d64-9579-161c4cc0d256","type":"CategoricalTicker"}},"id":"ec91ee5e-2f9c-44d3-8815-977b221119bc","type":"CategoricalAxis"},{"attributes":{"fields":[]},"id":"014fae5f-208f-4796-a9be-43295f2de51e","type":"Stack"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"$name: @$name"},"id":"f4dc599a-3ba6-4e19-bc4f-5a46f0a3f5dd","type":"HoverTool"},{"attributes":{"bottom":{"expr":{"id":"014fae5f-208f-4796-a9be-43295f2de51e","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"8dd5fe34-f47d-4b10-b15b-6d770b3e57ef","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Action"}},"id":"6f323c75-8cf1-47c5-86f2-a5fe76c97ec1","type":"VBar"}],"root_ids":["55dba242-4cdd-4a02-ae96-3e9238125c6b"]},"title":"Bokeh Application","version":"0.13.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('255c9db0-ce6b-4b29-a3bc-c0f59b4385e0').textContent;
+                  var render_items = [{"docid":"431e9227-eb38-4c3b-989b-cc31268d7d8b","roots":{"55dba242-4cdd-4a02-ae96-3e9238125c6b":"3d1ccb74-74bf-4b15-8c51-b52141cb7a29"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        embed_document(root);
+                        clearInterval(timer);
+                      }
+                      attempts++;
+                      if (attempts > 100) {
+                        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+                        clearInterval(timer);
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualisation-2:-Men-vs-Women">Visualisation 2: Men vs Women<a class="anchor-link" href="#Visualisation-2:-Men-vs-Women">&#182;</a></h2><p>The first chart gave us a nice breakdown by scoring shot. What about comparing the goals scored in the mens vs the women's competition. Well, with a very small flip of the axis (if you look at my code, it's a <em>very</em> small change), we can do just that!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Comp&#39;</span><span class="p">,</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">])[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">comps</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comps</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">comps</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total goals scored per competition&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;$name: @$name&quot;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar_stack</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Comp&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">source</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">action</span><span class="p">])</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Competition&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="45aeb213-4d0b-4236-9b11-ba8b5ebc6adf"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="d70ffcbc-5651-4c33-8d48-3e52effe383b"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#d70ffcbc-5651-4c33-8d48-3e52effe383b');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"f944a089-3d73-4e67-94e3-859b79274d9d":{"roots":{"references":[{"attributes":{"data_source":{"id":"1b5bf47d-0610-449e-b534-1d9796a78a68","type":"ColumnDataSource"},"glyph":{"id":"e3f938f6-b868-45c0-9f95-1dd6347e83f8","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"PumpPlay bonus","nonselection_glyph":{"id":"8aa67548-db4d-4031-a263-8fd7f3cd3b7a","type":"VBar"},"selection_glyph":null,"view":{"id":"47866227-d80f-4516-9095-b192fd727a7a","type":"CDSView"}},"id":"d8c6f982-9016-4476-836d-575730176fe3","type":"GlyphRenderer"},{"attributes":{},"id":"334b50f9-1496-4410-9b9c-9c840d6d8239","type":"UnionRenderers"},{"attributes":{"below":[{"id":"d2b988ca-0938-4476-b925-8148411eb141","type":"CategoricalAxis"}],"left":[{"id":"f8be5f8e-4b16-46b8-8ba6-942fab07ca3a","type":"LinearAxis"}],"renderers":[{"id":"d2b988ca-0938-4476-b925-8148411eb141","type":"CategoricalAxis"},{"id":"41569bee-fb8b-4bcc-8d32-f6d832dae22f","type":"Grid"},{"id":"f8be5f8e-4b16-46b8-8ba6-942fab07ca3a","type":"LinearAxis"},{"id":"99dd4b59-3320-43aa-a8b9-9310751509e8","type":"Grid"},{"id":"a3eb9ef4-437e-4780-91bf-ddd40c87d0cb","type":"Legend"},{"id":"86b6c2f2-9164-434c-918a-0ca9770b081f","type":"GlyphRenderer"},{"id":"fdccea13-a776-4348-9ecc-fbd1d5511b6f","type":"GlyphRenderer"},{"id":"89aeed56-ba51-46be-bb4e-4728da8e9dc2","type":"GlyphRenderer"},{"id":"77ff7b73-ccf1-44ad-9149-d65cb55a5483","type":"GlyphRenderer"},{"id":"d8c6f982-9016-4476-836d-575730176fe3","type":"GlyphRenderer"}],"title":{"id":"ff758e8e-ccb4-41b8-8e7f-fd02fb6a184f","type":"Title"},"toolbar":{"id":"15b0390c-522c-48f8-8459-5f70873e7566","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"af320fef-43fb-4584-9ea6-c77767614cf6","type":"FactorRange"},"x_scale":{"id":"012fa974-a370-4c10-97de-7dcc820506f7","type":"CategoricalScale"},"y_range":{"id":"013edb5a-898b-4d5e-8c91-612e82f4e44b","type":"DataRange1d"},"y_scale":{"id":"363c11cc-0d51-4d60-83d4-fe9852dfa9a8","type":"LinearScale"}},"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"},{"attributes":{"bottom":{"expr":{"id":"d4c53f4e-2ee3-4432-98a4-8387238bb122","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"0097bee0-9dd3-4d47-9293-f43a732a92c6","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"8aa67548-db4d-4031-a263-8fd7f3cd3b7a","type":"VBar"},{"attributes":{},"id":"363c11cc-0d51-4d60-83d4-fe9852dfa9a8","type":"LinearScale"},{"attributes":{},"id":"0bfbcad5-1fbf-4118-8752-c4a51f139770","type":"Selection"},{"attributes":{"source":{"id":"1b5bf47d-0610-449e-b534-1d9796a78a68","type":"ColumnDataSource"}},"id":"47866227-d80f-4516-9095-b192fd727a7a","type":"CDSView"},{"attributes":{},"id":"babcb7b4-08e6-474e-b07e-6e1e8b07651d","type":"BasicTicker"},{"attributes":{},"id":"c7952118-59b3-4197-8fb8-ff137a9c8a5d","type":"UnionRenderers"},{"attributes":{"axis_label":"Total","formatter":{"id":"afd57813-4d5d-4b73-9b0d-899bc1a3bd5e","type":"BasicTickFormatter"},"plot":{"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"},"ticker":{"id":"babcb7b4-08e6-474e-b07e-6e1e8b07651d","type":"BasicTicker"}},"id":"f8be5f8e-4b16-46b8-8ba6-942fab07ca3a","type":"LinearAxis"},{"attributes":{"callback":null},"id":"013edb5a-898b-4d5e-8c91-612e82f4e44b","type":"DataRange1d"},{"attributes":{},"id":"012fa974-a370-4c10-97de-7dcc820506f7","type":"CategoricalScale"},{"attributes":{"source":{"id":"c41756b7-ee4f-415e-8c81-388404cb2e30","type":"ColumnDataSource"}},"id":"52a1932d-600f-4d1d-bfc6-131b7d8c7894","type":"CDSView"},{"attributes":{"dimension":1,"plot":{"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"},"ticker":{"id":"babcb7b4-08e6-474e-b07e-6e1e8b07651d","type":"BasicTicker"}},"id":"99dd4b59-3320-43aa-a8b9-9310751509e8","type":"Grid"},{"attributes":{},"id":"d5bbb589-81ff-4d9f-a42c-4c02ea7877c8","type":"Selection"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"d4c53f4e-2ee3-4432-98a4-8387238bb122","type":"Stack"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"$name: @$name"},"id":"43b8e80d-9146-4704-8592-00f7f331036b","type":"HoverTool"},{"attributes":{"plot":null,"text":"Total goals scored per competition"},"id":"ff758e8e-ccb4-41b8-8e7f-fd02fb6a184f","type":"Title"},{"attributes":{},"id":"f94c4f78-7067-42b6-93d6-94db64ee366f","type":"CategoricalTicker"},{"attributes":{"axis_label":"Competition","formatter":{"id":"939bbe1a-2000-4052-a887-ae52e70bdf6b","type":"CategoricalTickFormatter"},"plot":{"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"},"ticker":{"id":"f94c4f78-7067-42b6-93d6-94db64ee366f","type":"CategoricalTicker"}},"id":"d2b988ca-0938-4476-b925-8148411eb141","type":"CategoricalAxis"},{"attributes":{},"id":"939bbe1a-2000-4052-a887-ae52e70bdf6b","type":"CategoricalTickFormatter"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"6a8244a8-9486-4139-ade8-db1a55425cf7","type":"Stack"},{"attributes":{"plot":{"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"},"ticker":{"id":"f94c4f78-7067-42b6-93d6-94db64ee366f","type":"CategoricalTicker"}},"id":"41569bee-fb8b-4bcc-8d32-f6d832dae22f","type":"Grid"},{"attributes":{},"id":"afd57813-4d5d-4b73-9b0d-899bc1a3bd5e","type":"BasicTickFormatter"},{"attributes":{"callback":null,"data":{"Comp":["Men","Women"],"Field Goal":[99,68],"Field Goal Conversion":[60,40],"Penalty Corner":[35,24],"Penalty Stroke":[2,10],"PumpPlay bonus":[12,13]},"selected":{"id":"d5bbb589-81ff-4d9f-a42c-4c02ea7877c8","type":"Selection"},"selection_policy":{"id":"c7952118-59b3-4197-8fb8-ff137a9c8a5d","type":"UnionRenderers"}},"id":"e37ebdba-23d0-459c-9b07-35fd73fe33d1","type":"ColumnDataSource"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"]},"id":"0097bee0-9dd3-4d47-9293-f43a732a92c6","type":"Stack"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"5d190d38-8854-4f82-a74a-198cb83c375c","type":"Stack"},{"attributes":{"label":{"value":"PumpPlay bonus"},"renderers":[{"id":"d8c6f982-9016-4476-836d-575730176fe3","type":"GlyphRenderer"}]},"id":"eb361b5a-0bdc-4b26-bff7-01b7c62893f1","type":"LegendItem"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"6d0b3034-3353-4122-b5c1-780e160a8b2a","type":"Stack"},{"attributes":{"fields":["Field Goal"]},"id":"d035d38f-01ce-4783-bcfa-09a079fa986a","type":"Stack"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"ec862816-410c-4eed-bea6-d29688641ee7","type":"Stack"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"c3f1565a-4369-4b6d-bba2-f6b4483f70a1","type":"Stack"},{"attributes":{"bottom":{"expr":{"id":"b4cfb802-8ecc-4692-85e4-50d28a86246f","type":"Stack"}},"fill_color":{"value":"#3B518A"},"line_color":{"value":"#3B518A"},"top":{"expr":{"id":"5d190d38-8854-4f82-a74a-198cb83c375c","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"cc926e00-b99d-41e4-8d79-66e3fcba9e34","type":"VBar"},{"attributes":{"fields":["Field Goal"]},"id":"b4cfb802-8ecc-4692-85e4-50d28a86246f","type":"Stack"},{"attributes":{"source":{"id":"e37ebdba-23d0-459c-9b07-35fd73fe33d1","type":"ColumnDataSource"}},"id":"d146c43a-ae87-4301-a867-d81b410e3bf1","type":"CDSView"},{"attributes":{"fields":[]},"id":"230427e4-9498-4142-b17e-c3fe801e2d71","type":"Stack"},{"attributes":{"label":{"value":"Field Goal Conversion"},"renderers":[{"id":"fdccea13-a776-4348-9ecc-fbd1d5511b6f","type":"GlyphRenderer"}]},"id":"873e4c5f-8475-4f7d-874c-58aef448599a","type":"LegendItem"},{"attributes":{"label":{"value":"Penalty Stroke"},"renderers":[{"id":"77ff7b73-ccf1-44ad-9149-d65cb55a5483","type":"GlyphRenderer"}]},"id":"3baf6316-5ec1-4a0f-9d39-2bcb61553b48","type":"LegendItem"},{"attributes":{"data_source":{"id":"e37ebdba-23d0-459c-9b07-35fd73fe33d1","type":"ColumnDataSource"},"glyph":{"id":"1c46afd5-c5b4-43fe-8655-9bcb9f4ac736","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal","nonselection_glyph":{"id":"a10ec8b4-9cf3-4ac3-a49d-9cb143923fc6","type":"VBar"},"selection_glyph":null,"view":{"id":"d146c43a-ae87-4301-a867-d81b410e3bf1","type":"CDSView"}},"id":"86b6c2f2-9164-434c-918a-0ca9770b081f","type":"GlyphRenderer"},{"attributes":{"data_source":{"id":"c41756b7-ee4f-415e-8c81-388404cb2e30","type":"ColumnDataSource"},"glyph":{"id":"cc926e00-b99d-41e4-8d79-66e3fcba9e34","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal Conversion","nonselection_glyph":{"id":"49ce6ba1-4b4a-4946-8242-9815333fd021","type":"VBar"},"selection_glyph":null,"view":{"id":"52a1932d-600f-4d1d-bfc6-131b7d8c7894","type":"CDSView"}},"id":"fdccea13-a776-4348-9ecc-fbd1d5511b6f","type":"GlyphRenderer"},{"attributes":{"bottom":{"expr":{"id":"c3f1565a-4369-4b6d-bba2-f6b4483f70a1","type":"Stack"}},"fill_color":{"value":"#208F8C"},"line_color":{"value":"#208F8C"},"top":{"expr":{"id":"ec862816-410c-4eed-bea6-d29688641ee7","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"f0e4a2ae-3ea7-4db2-b7f9-8767df11fd06","type":"VBar"},{"attributes":{},"id":"ef688914-3487-430d-afff-7b0816cac720","type":"UnionRenderers"},{"attributes":{"bottom":{"expr":{"id":"230427e4-9498-4142-b17e-c3fe801e2d71","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"d035d38f-01ce-4783-bcfa-09a079fa986a","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"a10ec8b4-9cf3-4ac3-a49d-9cb143923fc6","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"230427e4-9498-4142-b17e-c3fe801e2d71","type":"Stack"}},"fill_color":{"value":"#440154"},"line_color":{"value":"#440154"},"top":{"expr":{"id":"d035d38f-01ce-4783-bcfa-09a079fa986a","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"1c46afd5-c5b4-43fe-8655-9bcb9f4ac736","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"c3f1565a-4369-4b6d-bba2-f6b4483f70a1","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"ec862816-410c-4eed-bea6-d29688641ee7","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"2c85183e-86f5-43f2-91ee-3e8a498c78c2","type":"VBar"},{"attributes":{},"id":"ea8512c5-a9e1-4131-96ae-d76de660a2a0","type":"Selection"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"43b8e80d-9146-4704-8592-00f7f331036b","type":"HoverTool"}]},"id":"15b0390c-522c-48f8-8459-5f70873e7566","type":"Toolbar"},{"attributes":{"callback":null,"data":{"Comp":["Men","Women"],"Field Goal":[99,68],"Field Goal Conversion":[60,40],"Penalty Corner":[35,24],"Penalty Stroke":[2,10],"PumpPlay bonus":[12,13]},"selected":{"id":"450f2732-19ca-4e28-a2b1-fc5d364eed7c","type":"Selection"},"selection_policy":{"id":"325ccc91-0924-48af-8075-7c61067dff5b","type":"UnionRenderers"}},"id":"3cdd34dd-3dd3-4a2f-9c0b-3b5ab6c6d47f","type":"ColumnDataSource"},{"attributes":{"source":{"id":"3cdd34dd-3dd3-4a2f-9c0b-3b5ab6c6d47f","type":"ColumnDataSource"}},"id":"6eda6d10-af9f-4eec-89ba-13cac7895f79","type":"CDSView"},{"attributes":{"data_source":{"id":"3cdd34dd-3dd3-4a2f-9c0b-3b5ab6c6d47f","type":"ColumnDataSource"},"glyph":{"id":"f0e4a2ae-3ea7-4db2-b7f9-8767df11fd06","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Corner","nonselection_glyph":{"id":"2c85183e-86f5-43f2-91ee-3e8a498c78c2","type":"VBar"},"selection_glyph":null,"view":{"id":"6eda6d10-af9f-4eec-89ba-13cac7895f79","type":"CDSView"}},"id":"89aeed56-ba51-46be-bb4e-4728da8e9dc2","type":"GlyphRenderer"},{"attributes":{},"id":"fc3c7643-db86-4fb3-aca0-d34875843e3d","type":"Selection"},{"attributes":{"bottom":{"expr":{"id":"6a8244a8-9486-4139-ade8-db1a55425cf7","type":"Stack"}},"fill_color":{"value":"#5BC862"},"line_color":{"value":"#5BC862"},"top":{"expr":{"id":"6d0b3034-3353-4122-b5c1-780e160a8b2a","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"dc7a7a0b-9cfc-4db4-918b-9f28c596daf0","type":"VBar"},{"attributes":{"callback":null,"data":{"Comp":["Men","Women"],"Field Goal":[99,68],"Field Goal Conversion":[60,40],"Penalty Corner":[35,24],"Penalty Stroke":[2,10],"PumpPlay bonus":[12,13]},"selected":{"id":"0bfbcad5-1fbf-4118-8752-c4a51f139770","type":"Selection"},"selection_policy":{"id":"334b50f9-1496-4410-9b9c-9c840d6d8239","type":"UnionRenderers"}},"id":"d828923b-8d7a-4d85-9eab-715e8da0ea5d","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"d828923b-8d7a-4d85-9eab-715e8da0ea5d","type":"ColumnDataSource"},"glyph":{"id":"dc7a7a0b-9cfc-4db4-918b-9f28c596daf0","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Stroke","nonselection_glyph":{"id":"a1d0020b-f0fc-4ecb-a770-adfaa079bd61","type":"VBar"},"selection_glyph":null,"view":{"id":"1237abd7-0e1e-4c94-aac4-ff3f66c81edb","type":"CDSView"}},"id":"77ff7b73-ccf1-44ad-9149-d65cb55a5483","type":"GlyphRenderer"},{"attributes":{"label":{"value":"Field Goal"},"renderers":[{"id":"86b6c2f2-9164-434c-918a-0ca9770b081f","type":"GlyphRenderer"}]},"id":"fd9257d9-60b0-41f6-b281-d31a39fe2ffd","type":"LegendItem"},{"attributes":{"label":{"value":"Penalty Corner"},"renderers":[{"id":"89aeed56-ba51-46be-bb4e-4728da8e9dc2","type":"GlyphRenderer"}]},"id":"fb0a4794-b363-443d-bae7-b1010033bb7c","type":"LegendItem"},{"attributes":{},"id":"0f536326-9c9c-42f2-930f-28eadab75ab3","type":"UnionRenderers"},{"attributes":{"bottom":{"expr":{"id":"b4cfb802-8ecc-4692-85e4-50d28a86246f","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"5d190d38-8854-4f82-a74a-198cb83c375c","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"49ce6ba1-4b4a-4946-8242-9815333fd021","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"6a8244a8-9486-4139-ade8-db1a55425cf7","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"6d0b3034-3353-4122-b5c1-780e160a8b2a","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"a1d0020b-f0fc-4ecb-a770-adfaa079bd61","type":"VBar"},{"attributes":{"items":[{"id":"fd9257d9-60b0-41f6-b281-d31a39fe2ffd","type":"LegendItem"},{"id":"873e4c5f-8475-4f7d-874c-58aef448599a","type":"LegendItem"},{"id":"fb0a4794-b363-443d-bae7-b1010033bb7c","type":"LegendItem"},{"id":"3baf6316-5ec1-4a0f-9d39-2bcb61553b48","type":"LegendItem"},{"id":"eb361b5a-0bdc-4b26-bff7-01b7c62893f1","type":"LegendItem"}],"plot":{"id":"50cf6eec-6cda-49c7-97de-14992ff20f8f","subtype":"Figure","type":"Plot"}},"id":"a3eb9ef4-437e-4780-91bf-ddd40c87d0cb","type":"Legend"},{"attributes":{},"id":"450f2732-19ca-4e28-a2b1-fc5d364eed7c","type":"Selection"},{"attributes":{"source":{"id":"d828923b-8d7a-4d85-9eab-715e8da0ea5d","type":"ColumnDataSource"}},"id":"1237abd7-0e1e-4c94-aac4-ff3f66c81edb","type":"CDSView"},{"attributes":{"callback":null,"data":{"Comp":["Men","Women"],"Field Goal":[99,68],"Field Goal Conversion":[60,40],"Penalty Corner":[35,24],"Penalty Stroke":[2,10],"PumpPlay bonus":[12,13]},"selected":{"id":"fc3c7643-db86-4fb3-aca0-d34875843e3d","type":"Selection"},"selection_policy":{"id":"0f536326-9c9c-42f2-930f-28eadab75ab3","type":"UnionRenderers"}},"id":"c41756b7-ee4f-415e-8c81-388404cb2e30","type":"ColumnDataSource"},{"attributes":{},"id":"325ccc91-0924-48af-8075-7c61067dff5b","type":"UnionRenderers"},{"attributes":{"callback":null,"factors":["Men","Women"]},"id":"af320fef-43fb-4584-9ea6-c77767614cf6","type":"FactorRange"},{"attributes":{"callback":null,"data":{"Comp":["Men","Women"],"Field Goal":[99,68],"Field Goal Conversion":[60,40],"Penalty Corner":[35,24],"Penalty Stroke":[2,10],"PumpPlay bonus":[12,13]},"selected":{"id":"ea8512c5-a9e1-4131-96ae-d76de660a2a0","type":"Selection"},"selection_policy":{"id":"ef688914-3487-430d-afff-7b0816cac720","type":"UnionRenderers"}},"id":"1b5bf47d-0610-449e-b534-1d9796a78a68","type":"ColumnDataSource"},{"attributes":{"bottom":{"expr":{"id":"d4c53f4e-2ee3-4432-98a4-8387238bb122","type":"Stack"}},"fill_color":{"value":"#FDE724"},"line_color":{"value":"#FDE724"},"top":{"expr":{"id":"0097bee0-9dd3-4d47-9293-f43a732a92c6","type":"Stack"}},"width":{"value":0.5},"x":{"field":"Comp"}},"id":"e3f938f6-b868-45c0-9f95-1dd6347e83f8","type":"VBar"}],"root_ids":["50cf6eec-6cda-49c7-97de-14992ff20f8f"]},"title":"Bokeh Application","version":"0.13.0"}};
+  var render_items = [{"docid":"f944a089-3d73-4e67-94e3-859b79274d9d","roots":{"50cf6eec-6cda-49c7-97de-14992ff20f8f":"45aeb213-4d0b-4236-9b11-ba8b5ebc6adf"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualisation-3:-grouped-bar-chart">Visualisation 3: grouped bar chart<a class="anchor-link" href="#Visualisation-3:-grouped-bar-chart">&#182;</a></h2><p>I quite like the stacked bar chart for its simplicity. But if you're trying to compare each scoring action, it can be hard to differentiate. Which competition scored more PumpPlays? The answer isn't immediately obvious.</p>
+<p>How about a grouped bar chart? Using the same axis as visualisation 1, we get a nice comparison between each competition.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">,</span><span class="s1">&#39;Comp&#39;</span><span class="p">])[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">comps</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span> <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">action</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">comps</span> <span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Men&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Women&#39;</span><span class="p">]),</span> <span class="p">())</span> <span class="c1"># like an hstack</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">))</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">FactorRange</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">650</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Comparison of scoring actions between competitions&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;@counts&quot;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s1">&#39;counts&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+
+       <span class="c1"># use the palette to colormap based on the the x[1:2] values</span>
+       <span class="n">fill_color</span><span class="o">=</span><span class="n">factor_cmap</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">factors</span><span class="o">=</span><span class="n">comps</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">.</span><span class="n">x_range</span><span class="o">.</span><span class="n">range_padding</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="s1">&#39;white&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="faaf5f1b-5145-4c1d-b0bf-989612930e7a"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="9aa596a2-93ba-4b20-b3ce-6a386eb6d2d0"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#9aa596a2-93ba-4b20-b3ce-6a386eb6d2d0');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"ce620ab5-cd8d-41b4-a8df-c25b66cd26b2":{"roots":{"references":[{"attributes":{},"id":"d88b0c80-d499-4773-87af-f6384aacb23f","type":"LinearScale"},{"attributes":{},"id":"8ad8088f-73fc-4c86-8dea-50a0754ecf35","type":"CategoricalScale"},{"attributes":{"callback":null,"start":0},"id":"a2880da4-3632-4cc3-96f6-0bfcb30b0c77","type":"DataRange1d"},{"attributes":{"formatter":{"id":"dcc27947-5ef3-4143-ad5f-2f4974c314e1","type":"CategoricalTickFormatter"},"major_label_orientation":0.7853981633974483,"plot":{"id":"43422975-c7d2-4eff-9bac-e973bfae35b0","subtype":"Figure","type":"Plot"},"ticker":{"id":"f578bcc9-3348-4f89-aa48-6c178f9e37d8","type":"CategoricalTicker"}},"id":"0204e00b-47eb-479b-93d5-a1f24c94e94f","type":"CategoricalAxis"},{"attributes":{"plot":null,"text":"Comparison of scoring actions between competitions"},"id":"a331e4f2-03d3-4fb2-8e6b-d19ac77ed8bf","type":"Title"},{"attributes":{"grid_line_color":{"value":"white"},"plot":{"id":"43422975-c7d2-4eff-9bac-e973bfae35b0","subtype":"Figure","type":"Plot"},"ticker":{"id":"f578bcc9-3348-4f89-aa48-6c178f9e37d8","type":"CategoricalTicker"}},"id":"d9084060-29cf-48d5-b33f-6d3c065b7f0c","type":"Grid"},{"attributes":{},"id":"f578bcc9-3348-4f89-aa48-6c178f9e37d8","type":"CategoricalTicker"},{"attributes":{},"id":"174e277a-a78c-4153-846f-dc4c50c5127e","type":"BasicTicker"},{"attributes":{},"id":"dcc27947-5ef3-4143-ad5f-2f4974c314e1","type":"CategoricalTickFormatter"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"b15a7928-ea17-4d0f-8278-9bc884e0723c","type":"HoverTool"}]},"id":"ed4e67aa-ef57-406d-823f-7e51b88bdb14","type":"Toolbar"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"@counts"},"id":"b15a7928-ea17-4d0f-8278-9bc884e0723c","type":"HoverTool"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"4b8c5299-81fb-479a-a95a-572d4efb7813","type":"CategoricalColorMapper"}},"line_color":{"value":"white"},"top":{"field":"counts"},"width":{"value":0.9},"x":{"field":"x"}},"id":"92857926-d19a-4af4-a222-421c07274f95","type":"VBar"},{"attributes":{"callback":null,"factors":[["Field Goal","Men"],["Field Goal","Women"],["Field Goal Conversion","Men"],["Field Goal Conversion","Women"],["Penalty Corner","Men"],["Penalty Corner","Women"],["Penalty Stroke","Men"],["Penalty Stroke","Women"],["PumpPlay bonus","Men"],["PumpPlay bonus","Women"]],"range_padding":0.1},"id":"851d29e0-4e45-45cc-b151-49036f716dab","type":"FactorRange"},{"attributes":{"end":2,"factors":["Men","Women"],"palette":["#440154","#FDE724"],"start":1},"id":"4b8c5299-81fb-479a-a95a-572d4efb7813","type":"CategoricalColorMapper"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"field":"counts"},"width":{"value":0.9},"x":{"field":"x"}},"id":"80ba2b73-c182-48ad-b5be-ba24a1f9245d","type":"VBar"},{"attributes":{"callback":null,"data":{"counts":[99,68,60,40,35,24,2,10,12,13],"x":[["Field Goal","Men"],["Field Goal","Women"],["Field Goal Conversion","Men"],["Field Goal Conversion","Women"],["Penalty Corner","Men"],["Penalty Corner","Women"],["Penalty Stroke","Men"],["Penalty Stroke","Women"],["PumpPlay bonus","Men"],["PumpPlay bonus","Women"]]},"selected":{"id":"dd1ac6f6-9960-4ca1-80fe-f256e8a93d1a","type":"Selection"},"selection_policy":{"id":"e2e207c7-c0f5-461c-89e2-4bab44e72b8c","type":"UnionRenderers"}},"id":"97204e7f-5848-43c8-98ea-dea46d798918","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"97204e7f-5848-43c8-98ea-dea46d798918","type":"ColumnDataSource"},"glyph":{"id":"92857926-d19a-4af4-a222-421c07274f95","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"80ba2b73-c182-48ad-b5be-ba24a1f9245d","type":"VBar"},"selection_glyph":null,"view":{"id":"6889a6f5-12f2-4660-af43-49f4d369cfe6","type":"CDSView"}},"id":"8d8b07f8-2c0d-467a-b866-21e5f46c0f20","type":"GlyphRenderer"},{"attributes":{"source":{"id":"97204e7f-5848-43c8-98ea-dea46d798918","type":"ColumnDataSource"}},"id":"6889a6f5-12f2-4660-af43-49f4d369cfe6","type":"CDSView"},{"attributes":{},"id":"cd825efe-1245-4e45-9179-d5aa33e7748b","type":"BasicTickFormatter"},{"attributes":{"dimension":1,"plot":{"id":"43422975-c7d2-4eff-9bac-e973bfae35b0","subtype":"Figure","type":"Plot"},"ticker":{"id":"174e277a-a78c-4153-846f-dc4c50c5127e","type":"BasicTicker"}},"id":"691c0ad8-7b2c-4721-b120-6d7d3f5aebd7","type":"Grid"},{"attributes":{},"id":"dd1ac6f6-9960-4ca1-80fe-f256e8a93d1a","type":"Selection"},{"attributes":{"below":[{"id":"0204e00b-47eb-479b-93d5-a1f24c94e94f","type":"CategoricalAxis"}],"left":[{"id":"16ac8b1e-ff7d-4dfe-9999-d1f9e55fde87","type":"LinearAxis"}],"plot_height":250,"plot_width":650,"renderers":[{"id":"0204e00b-47eb-479b-93d5-a1f24c94e94f","type":"CategoricalAxis"},{"id":"d9084060-29cf-48d5-b33f-6d3c065b7f0c","type":"Grid"},{"id":"16ac8b1e-ff7d-4dfe-9999-d1f9e55fde87","type":"LinearAxis"},{"id":"691c0ad8-7b2c-4721-b120-6d7d3f5aebd7","type":"Grid"},{"id":"8d8b07f8-2c0d-467a-b866-21e5f46c0f20","type":"GlyphRenderer"}],"title":{"id":"a331e4f2-03d3-4fb2-8e6b-d19ac77ed8bf","type":"Title"},"toolbar":{"id":"ed4e67aa-ef57-406d-823f-7e51b88bdb14","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"851d29e0-4e45-45cc-b151-49036f716dab","type":"FactorRange"},"x_scale":{"id":"8ad8088f-73fc-4c86-8dea-50a0754ecf35","type":"CategoricalScale"},"y_range":{"id":"a2880da4-3632-4cc3-96f6-0bfcb30b0c77","type":"DataRange1d"},"y_scale":{"id":"d88b0c80-d499-4773-87af-f6384aacb23f","type":"LinearScale"}},"id":"43422975-c7d2-4eff-9bac-e973bfae35b0","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"e2e207c7-c0f5-461c-89e2-4bab44e72b8c","type":"UnionRenderers"},{"attributes":{"axis_label":"Total","formatter":{"id":"cd825efe-1245-4e45-9179-d5aa33e7748b","type":"BasicTickFormatter"},"plot":{"id":"43422975-c7d2-4eff-9bac-e973bfae35b0","subtype":"Figure","type":"Plot"},"ticker":{"id":"174e277a-a78c-4153-846f-dc4c50c5127e","type":"BasicTicker"}},"id":"16ac8b1e-ff7d-4dfe-9999-d1f9e55fde87","type":"LinearAxis"}],"root_ids":["43422975-c7d2-4eff-9bac-e973bfae35b0"]},"title":"Bokeh Application","version":"0.13.0"}};
+  var render_items = [{"docid":"ce620ab5-cd8d-41b4-a8df-c25b66cd26b2","roots":{"43422975-c7d2-4eff-9bac-e973bfae35b0":"faaf5f1b-5145-4c1d-b0bf-989612930e7a"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And, just for fun, let's compare scoring type within competitions.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">comps</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Comp&#39;</span><span class="p">,</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">])[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">comps</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comps</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">act</span><span class="p">)</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">comps</span> <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">action</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Field Goal&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Field Goal Conversion&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Penalty Corner&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Penalty Stroke&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;PumpPlay bonus&#39;</span><span class="p">]),</span> <span class="p">())</span> <span class="c1"># like an hstack</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">))</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">FactorRange</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">650</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Comparison of scoring actions within competition&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;@counts&quot;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s1">&#39;counts&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+
+       <span class="c1"># use the palette to colormap based on the the x[1:2] values</span>
+       <span class="n">fill_color</span><span class="o">=</span><span class="n">factor_cmap</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">factors</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">.</span><span class="n">x_range</span><span class="o">.</span><span class="n">range_padding</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="s1">&#39;white&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="d30c8cee-6751-4d6b-9b81-ee84b0abe6eb"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="54ad677a-7a8d-412c-9abd-79b900a78fbb"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#54ad677a-7a8d-412c-9abd-79b900a78fbb');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"a2bd6a33-c24b-453d-98c1-7b3c52a8ddd6":{"roots":{"references":[{"attributes":{},"id":"651bb731-2ba0-4c16-b5ba-46b62fb8e380","type":"UnionRenderers"},{"attributes":{},"id":"6e4d2371-0e4b-46b8-8d2f-f255b131cb55","type":"BasicTickFormatter"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"de911eac-d3ce-46e3-bb61-195222d06c67","type":"CategoricalColorMapper"}},"line_color":{"value":"white"},"top":{"field":"counts"},"width":{"value":0.9},"x":{"field":"x"}},"id":"08e79408-5658-4068-9b07-ae53753c87f8","type":"VBar"},{"attributes":{"end":2,"factors":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"],"palette":["#440154","#3B518A","#208F8C","#5BC862","#FDE724"],"start":1},"id":"de911eac-d3ce-46e3-bb61-195222d06c67","type":"CategoricalColorMapper"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"81c0c173-6b1e-4ae1-be77-5c194693010a","type":"HoverTool"}]},"id":"d236c044-b334-4273-a44e-c60244de917d","type":"Toolbar"},{"attributes":{"callback":null,"factors":[["Men","Field Goal"],["Men","Field Goal Conversion"],["Men","Penalty Corner"],["Men","Penalty Stroke"],["Men","PumpPlay bonus"],["Women","Field Goal"],["Women","Field Goal Conversion"],["Women","Penalty Corner"],["Women","Penalty Stroke"],["Women","PumpPlay bonus"]],"range_padding":0.1},"id":"534c9930-a3a3-46bb-8142-4565a5193502","type":"FactorRange"},{"attributes":{"source":{"id":"a2d0984e-d292-4e20-b66c-b0631d784aa0","type":"ColumnDataSource"}},"id":"202e2504-4425-4226-a667-cfae1a4de922","type":"CDSView"},{"attributes":{"below":[{"id":"136e77f5-81c1-4713-bc4d-6b3053966335","type":"CategoricalAxis"}],"left":[{"id":"4ba1861a-1323-4e32-a64e-6de5cd7f13a7","type":"LinearAxis"}],"plot_height":400,"plot_width":650,"renderers":[{"id":"136e77f5-81c1-4713-bc4d-6b3053966335","type":"CategoricalAxis"},{"id":"d11f2fb7-60c7-4781-937d-3d9af1bd9028","type":"Grid"},{"id":"4ba1861a-1323-4e32-a64e-6de5cd7f13a7","type":"LinearAxis"},{"id":"9922478d-2d38-4258-b04e-62945ba06f8d","type":"Grid"},{"id":"c75fd0dc-8693-4e10-8921-1b3326bb2026","type":"GlyphRenderer"}],"title":{"id":"ed45a583-c993-49a5-bb27-11c94d68064a","type":"Title"},"toolbar":{"id":"d236c044-b334-4273-a44e-c60244de917d","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"534c9930-a3a3-46bb-8142-4565a5193502","type":"FactorRange"},"x_scale":{"id":"e4436a71-a729-4148-905c-f5c6f51e20fa","type":"CategoricalScale"},"y_range":{"id":"bd2a4e7d-7cff-47b2-b90b-57c8e199d074","type":"DataRange1d"},"y_scale":{"id":"a857cef0-d3df-4c3f-9fad-c9d7133b768c","type":"LinearScale"}},"id":"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"7f30e815-f11c-4f3b-bf6d-eab5b446a499","type":"CategoricalTickFormatter"},{"attributes":{},"id":"b6de99ce-660a-4e72-af76-af017c30d397","type":"Selection"},{"attributes":{"plot":null,"text":"Comparison of scoring actions within competition"},"id":"ed45a583-c993-49a5-bb27-11c94d68064a","type":"Title"},{"attributes":{"axis_label":"Total","formatter":{"id":"6e4d2371-0e4b-46b8-8d2f-f255b131cb55","type":"BasicTickFormatter"},"plot":{"id":"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8","subtype":"Figure","type":"Plot"},"ticker":{"id":"4036c9d7-5018-4c7f-bb88-04308930551f","type":"BasicTicker"}},"id":"4ba1861a-1323-4e32-a64e-6de5cd7f13a7","type":"LinearAxis"},{"attributes":{},"id":"a857cef0-d3df-4c3f-9fad-c9d7133b768c","type":"LinearScale"},{"attributes":{"dimension":1,"plot":{"id":"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8","subtype":"Figure","type":"Plot"},"ticker":{"id":"4036c9d7-5018-4c7f-bb88-04308930551f","type":"BasicTicker"}},"id":"9922478d-2d38-4258-b04e-62945ba06f8d","type":"Grid"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"@counts"},"id":"81c0c173-6b1e-4ae1-be77-5c194693010a","type":"HoverTool"},{"attributes":{"callback":null,"data":{"counts":[99,60,35,2,12,68,40,24,10,13],"x":[["Men","Field Goal"],["Men","Field Goal Conversion"],["Men","Penalty Corner"],["Men","Penalty Stroke"],["Men","PumpPlay bonus"],["Women","Field Goal"],["Women","Field Goal Conversion"],["Women","Penalty Corner"],["Women","Penalty Stroke"],["Women","PumpPlay bonus"]]},"selected":{"id":"b6de99ce-660a-4e72-af76-af017c30d397","type":"Selection"},"selection_policy":{"id":"651bb731-2ba0-4c16-b5ba-46b62fb8e380","type":"UnionRenderers"}},"id":"a2d0984e-d292-4e20-b66c-b0631d784aa0","type":"ColumnDataSource"},{"attributes":{"grid_line_color":{"value":"white"},"plot":{"id":"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8","subtype":"Figure","type":"Plot"},"ticker":{"id":"a5e29604-f8bd-49d1-a873-745f68076b03","type":"CategoricalTicker"}},"id":"d11f2fb7-60c7-4781-937d-3d9af1bd9028","type":"Grid"},{"attributes":{"callback":null,"start":0},"id":"bd2a4e7d-7cff-47b2-b90b-57c8e199d074","type":"DataRange1d"},{"attributes":{},"id":"4036c9d7-5018-4c7f-bb88-04308930551f","type":"BasicTicker"},{"attributes":{"formatter":{"id":"7f30e815-f11c-4f3b-bf6d-eab5b446a499","type":"CategoricalTickFormatter"},"major_label_orientation":0.7853981633974483,"plot":{"id":"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8","subtype":"Figure","type":"Plot"},"ticker":{"id":"a5e29604-f8bd-49d1-a873-745f68076b03","type":"CategoricalTicker"}},"id":"136e77f5-81c1-4713-bc4d-6b3053966335","type":"CategoricalAxis"},{"attributes":{},"id":"a5e29604-f8bd-49d1-a873-745f68076b03","type":"CategoricalTicker"},{"attributes":{"data_source":{"id":"a2d0984e-d292-4e20-b66c-b0631d784aa0","type":"ColumnDataSource"},"glyph":{"id":"08e79408-5658-4068-9b07-ae53753c87f8","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"7597d052-32b5-4a59-8b67-5cf6c5b8e1a6","type":"VBar"},"selection_glyph":null,"view":{"id":"202e2504-4425-4226-a667-cfae1a4de922","type":"CDSView"}},"id":"c75fd0dc-8693-4e10-8921-1b3326bb2026","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"field":"counts"},"width":{"value":0.9},"x":{"field":"x"}},"id":"7597d052-32b5-4a59-8b67-5cf6c5b8e1a6","type":"VBar"},{"attributes":{},"id":"e4436a71-a729-4148-905c-f5c6f51e20fa","type":"CategoricalScale"}],"root_ids":["f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8"]},"title":"Bokeh Application","version":"0.13.0"}};
+  var render_items = [{"docid":"a2bd6a33-c24b-453d-98c1-7b3c52a8ddd6","roots":{"f2a3bcf8-ed01-444d-b5a0-1baa2b94f8a8":"d30c8cee-6751-4d6b-9b81-ee84b0abe6eb"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualisation-4:-Scoring-actions-by-team!">Visualisation 4: Scoring actions by team!<a class="anchor-link" href="#Visualisation-4:-Scoring-actions-by-team!">&#182;</a></h2><p>Finally, because I feel like getting fancy, let's do a breakdown of scoring action by team. This is moving a bit beyond the data in Hockey Australia's breakdown. But if I already have the data, I should totally make another pretty picture!</p>
+<p>In this case, I'm not doing a comparison between the men's and women's competitions. I'm not convinced of the value in doing that. While teams from the same state would obviously train together, they are different teams in a different competition and a comparison isn't really meaningful. But the main reason I don't want to do that is because there would be waaaay too much information for the eyes and brain to take in, and that's the opposite of what I'm going for here.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+
+<span class="n">mens</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Men&#39;</span><span class="p">]</span>
+<span class="n">womens</span> <span class="o">=</span> <span class="n">goals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">goals</span><span class="p">[</span><span class="s1">&#39;Comp&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Women&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mens</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">teams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mens</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">teams</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">mens</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">])[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">teams</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">teams</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">teams</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Men&#39;s competition: scoring action by team&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;$name: @$name&quot;</span><span class="p">)</span>
+
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar_stack</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">source</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">action</span><span class="p">],</span> <span class="n">line_color</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;top_left&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Men&#39;s team&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="71bde5ad-6ed6-4755-ab71-fc5ced36d907"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="5fecd339-24d0-4ca1-ba80-4d859002c36f"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#5fecd339-24d0-4ca1-ba80-4d859002c36f');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"13ab02df-4182-4776-9407-50eb8ff74e5a":{"roots":{"references":[{"attributes":{"label":{"value":"Penalty Corner"},"renderers":[{"id":"e7676b2d-3e86-445d-bee5-b0b200f49a08","type":"GlyphRenderer"}]},"id":"7e9f461c-f0e0-4c5f-8400-9268c643810e","type":"LegendItem"},{"attributes":{},"id":"caa9774c-9a78-4eac-8bf7-844770a277aa","type":"UnionRenderers"},{"attributes":{"source":{"id":"455c0561-3ed6-4cea-b954-05a31176d3ef","type":"ColumnDataSource"}},"id":"e3440710-cc2a-4bdc-8836-7ddf09a34966","type":"CDSView"},{"attributes":{"bottom":{"expr":{"id":"d4038815-7ba5-4e51-82c5-54e68c96dbe4","type":"Stack"}},"fill_color":{"value":"#5BC862"},"line_color":{"value":null},"top":{"expr":{"id":"b75d23fb-7c7b-4010-a89a-a49e98b55b60","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"b43608de-02df-4003-967d-b3c37810946a","type":"VBar"},{"attributes":{"fields":["Field Goal"]},"id":"f2fbf76e-4def-4c1a-9f3c-03edccddac5d","type":"Stack"},{"attributes":{"bottom":{"expr":{"id":"6a6d1f7c-0892-47ba-9a55-82f799670466","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"8b53d175-71ce-4050-9471-6600a55c0372","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"a62daabc-2b7a-4bf4-a320-e2281a9935ff","type":"VBar"},{"attributes":{"callback":null,"data":{"Field Goal":[10,15,5,14,8,11,22,14],"Field Goal Conversion":[4,9,1,9,4,9,14,10],"Penalty Corner":[1,7,2,4,0,7,12,2],"Penalty Stroke":[1,0,0,1,0,0,0,0],"PumpPlay bonus":[1,1,1,1,1,3,3,1],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"8dd3c71a-0f5d-4ef9-b453-435b393c4637","type":"Selection"},"selection_policy":{"id":"397b143f-c5b4-4a9b-8f98-f3c3974afcc0","type":"UnionRenderers"}},"id":"e9df3fb2-36ff-43ba-ba04-bdc88e577ab9","type":"ColumnDataSource"},{"attributes":{"bottom":{"expr":{"id":"6a6d1f7c-0892-47ba-9a55-82f799670466","type":"Stack"}},"fill_color":{"value":"#208F8C"},"line_color":{"value":null},"top":{"expr":{"id":"8b53d175-71ce-4050-9471-6600a55c0372","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"d08de174-fcdf-48d4-bf2b-cc8b73fdcce7","type":"VBar"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"b75d23fb-7c7b-4010-a89a-a49e98b55b60","type":"Stack"},{"attributes":{"data_source":{"id":"35dd523d-4edf-43ae-8392-1433bd0737d8","type":"ColumnDataSource"},"glyph":{"id":"77210b5b-ac2d-4b84-a84e-0f8bfaa44ac8","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"PumpPlay bonus","nonselection_glyph":{"id":"8f76081c-5cba-457d-b13b-e3204e007035","type":"VBar"},"selection_glyph":null,"view":{"id":"95adf5db-3aba-4cfa-b1c7-30b5f90ec3ee","type":"CDSView"}},"id":"6ffc7e2e-1d78-48c2-b470-8c6c6dd16d65","type":"GlyphRenderer"},{"attributes":{},"id":"324e56bb-1260-43bd-ac71-0d75b732b6fa","type":"LinearScale"},{"attributes":{"label":{"value":"PumpPlay bonus"},"renderers":[{"id":"6ffc7e2e-1d78-48c2-b470-8c6c6dd16d65","type":"GlyphRenderer"}]},"id":"908ff24c-9f29-4cbe-845c-7869f5c67da6","type":"LegendItem"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"d4038815-7ba5-4e51-82c5-54e68c96dbe4","type":"Stack"},{"attributes":{"data_source":{"id":"e9df3fb2-36ff-43ba-ba04-bdc88e577ab9","type":"ColumnDataSource"},"glyph":{"id":"9856813d-8443-4be4-9d07-522f474a83eb","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal Conversion","nonselection_glyph":{"id":"196f1285-c4c3-481d-bcc9-7886dd0a0831","type":"VBar"},"selection_glyph":null,"view":{"id":"d41fc882-f64f-481a-bf9c-9933f9c29814","type":"CDSView"}},"id":"cd33a4f3-a229-4bf5-a933-092a382621e2","type":"GlyphRenderer"},{"attributes":{"callback":null,"data":{"Field Goal":[10,15,5,14,8,11,22,14],"Field Goal Conversion":[4,9,1,9,4,9,14,10],"Penalty Corner":[1,7,2,4,0,7,12,2],"Penalty Stroke":[1,0,0,1,0,0,0,0],"PumpPlay bonus":[1,1,1,1,1,3,3,1],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"47970a89-c522-46da-8539-6f26ba9b0366","type":"Selection"},"selection_policy":{"id":"de12ec13-4fd6-41dc-9682-a532538440d7","type":"UnionRenderers"}},"id":"455c0561-3ed6-4cea-b954-05a31176d3ef","type":"ColumnDataSource"},{"attributes":{"callback":null,"data":{"Field Goal":[10,15,5,14,8,11,22,14],"Field Goal Conversion":[4,9,1,9,4,9,14,10],"Penalty Corner":[1,7,2,4,0,7,12,2],"Penalty Stroke":[1,0,0,1,0,0,0,0],"PumpPlay bonus":[1,1,1,1,1,3,3,1],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"fd303307-a1f3-49c7-9a65-111e64933cb5","type":"Selection"},"selection_policy":{"id":"caa9774c-9a78-4eac-8bf7-844770a277aa","type":"UnionRenderers"}},"id":"a0aeeda3-058d-4026-97e5-f6722a01172b","type":"ColumnDataSource"},{"attributes":{},"id":"578b2b8b-d853-438d-b24e-86669d9bafd5","type":"UnionRenderers"},{"attributes":{"label":{"value":"Field Goal Conversion"},"renderers":[{"id":"cd33a4f3-a229-4bf5-a933-092a382621e2","type":"GlyphRenderer"}]},"id":"0ae0f464-c47d-4d60-b7f8-584a188b31c9","type":"LegendItem"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"f13c1c12-64c4-4c9a-84b8-4e9d17d61ec9","type":"Stack"},{"attributes":{},"id":"d54cd76d-d106-45b6-9a4e-d452655d894c","type":"CategoricalTickFormatter"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"$name: @$name"},"id":"0ab7a86a-2fed-469b-87c1-144c4d466777","type":"HoverTool"},{"attributes":{"data_source":{"id":"a0aeeda3-058d-4026-97e5-f6722a01172b","type":"ColumnDataSource"},"glyph":{"id":"b43608de-02df-4003-967d-b3c37810946a","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Stroke","nonselection_glyph":{"id":"051b6dad-1ca6-48e4-8dd4-b7acd19e700d","type":"VBar"},"selection_glyph":null,"view":{"id":"752e09eb-0194-48bd-ab51-781155fb1c1c","type":"CDSView"}},"id":"5bb60673-5fa2-4102-a07e-38fae6dc57c3","type":"GlyphRenderer"},{"attributes":{"bottom":{"expr":{"id":"f2fbf76e-4def-4c1a-9f3c-03edccddac5d","type":"Stack"}},"fill_color":{"value":"#3B518A"},"line_color":{"value":null},"top":{"expr":{"id":"daec9054-57bd-411f-ba2f-8d1183dbb38e","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"9856813d-8443-4be4-9d07-522f474a83eb","type":"VBar"},{"attributes":{},"id":"8dd3c71a-0f5d-4ef9-b453-435b393c4637","type":"Selection"},{"attributes":{"data_source":{"id":"455c0561-3ed6-4cea-b954-05a31176d3ef","type":"ColumnDataSource"},"glyph":{"id":"d08de174-fcdf-48d4-bf2b-cc8b73fdcce7","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Corner","nonselection_glyph":{"id":"a62daabc-2b7a-4bf4-a320-e2281a9935ff","type":"VBar"},"selection_glyph":null,"view":{"id":"e3440710-cc2a-4bdc-8836-7ddf09a34966","type":"CDSView"}},"id":"e7676b2d-3e86-445d-bee5-b0b200f49a08","type":"GlyphRenderer"},{"attributes":{"bottom":{"expr":{"id":"8a2e90e7-2f04-42d0-bbcc-b1e6a4d23688","type":"Stack"}},"fill_color":{"value":"#440154"},"line_color":{"value":null},"top":{"expr":{"id":"d4af1c0c-3638-442f-91da-0fb41ec915a8","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"668a2d5d-7c1d-4141-b1f8-e3f7dfb10618","type":"VBar"},{"attributes":{},"id":"397b143f-c5b4-4a9b-8f98-f3c3974afcc0","type":"UnionRenderers"},{"attributes":{},"id":"648a077c-1415-49b0-8f80-870aabf3b5da","type":"CategoricalScale"},{"attributes":{"callback":null},"id":"b3668051-5e25-4955-a7d4-9d62664e2438","type":"DataRange1d"},{"attributes":{"axis_label":"Total","formatter":{"id":"4670adb3-400b-449e-8b23-d0fabf86015c","type":"BasicTickFormatter"},"plot":{"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"},"ticker":{"id":"c38852ca-c32f-47c5-a328-337d2f0d9970","type":"BasicTicker"}},"id":"a4545207-3ebf-469c-b90e-8bbc19304f3e","type":"LinearAxis"},{"attributes":{"callback":null,"factors":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"id":"753c1dd2-260c-400a-9153-638ca7716139","type":"FactorRange"},{"attributes":{"below":[{"id":"f23b68ee-7ab5-4f1c-928f-d4cba8392ece","type":"CategoricalAxis"}],"left":[{"id":"a4545207-3ebf-469c-b90e-8bbc19304f3e","type":"LinearAxis"}],"plot_height":500,"renderers":[{"id":"f23b68ee-7ab5-4f1c-928f-d4cba8392ece","type":"CategoricalAxis"},{"id":"c335ec34-3777-4408-bd45-5b634c6323d5","type":"Grid"},{"id":"a4545207-3ebf-469c-b90e-8bbc19304f3e","type":"LinearAxis"},{"id":"7305f42b-8412-4358-80e1-0b8cae074ac3","type":"Grid"},{"id":"73f5ba4a-6059-4c6e-b958-2231dfb3f5f5","type":"Legend"},{"id":"c2176614-dc7b-413f-ba69-9f0c125e42f0","type":"GlyphRenderer"},{"id":"cd33a4f3-a229-4bf5-a933-092a382621e2","type":"GlyphRenderer"},{"id":"e7676b2d-3e86-445d-bee5-b0b200f49a08","type":"GlyphRenderer"},{"id":"5bb60673-5fa2-4102-a07e-38fae6dc57c3","type":"GlyphRenderer"},{"id":"6ffc7e2e-1d78-48c2-b470-8c6c6dd16d65","type":"GlyphRenderer"}],"title":{"id":"6697ecc3-480b-4ed0-906f-384a0b0bd42d","type":"Title"},"toolbar":{"id":"8d5d3336-4076-4c5c-8a85-284abe5ef329","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"753c1dd2-260c-400a-9153-638ca7716139","type":"FactorRange"},"x_scale":{"id":"648a077c-1415-49b0-8f80-870aabf3b5da","type":"CategoricalScale"},"y_range":{"id":"b3668051-5e25-4955-a7d4-9d62664e2438","type":"DataRange1d"},"y_scale":{"id":"324e56bb-1260-43bd-ac71-0d75b732b6fa","type":"LinearScale"}},"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"},{"attributes":{"plot":{"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"},"ticker":{"id":"d2db2e45-1009-4b7b-9af5-197de08dd618","type":"CategoricalTicker"}},"id":"c335ec34-3777-4408-bd45-5b634c6323d5","type":"Grid"},{"attributes":{"bottom":{"expr":{"id":"f13c1c12-64c4-4c9a-84b8-4e9d17d61ec9","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"c43a0aca-1819-46e7-82cc-821f688379a9","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"8f76081c-5cba-457d-b13b-e3204e007035","type":"VBar"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"daec9054-57bd-411f-ba2f-8d1183dbb38e","type":"Stack"},{"attributes":{},"id":"d2db2e45-1009-4b7b-9af5-197de08dd618","type":"CategoricalTicker"},{"attributes":{"fields":[]},"id":"8a2e90e7-2f04-42d0-bbcc-b1e6a4d23688","type":"Stack"},{"attributes":{},"id":"c38852ca-c32f-47c5-a328-337d2f0d9970","type":"BasicTicker"},{"attributes":{"data_source":{"id":"6e400ba3-2f06-4d59-8f4d-83ed86480c69","type":"ColumnDataSource"},"glyph":{"id":"668a2d5d-7c1d-4141-b1f8-e3f7dfb10618","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal","nonselection_glyph":{"id":"f468feb2-6d53-4bb0-b00b-1f1540e51791","type":"VBar"},"selection_glyph":null,"view":{"id":"b54354b8-0018-4841-9304-8c485cf449fe","type":"CDSView"}},"id":"c2176614-dc7b-413f-ba69-9f0c125e42f0","type":"GlyphRenderer"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"]},"id":"c43a0aca-1819-46e7-82cc-821f688379a9","type":"Stack"},{"attributes":{},"id":"8adb5fe4-e6e4-4a3f-a5e5-6705f042be62","type":"Selection"},{"attributes":{"axis_label":"Men's team","formatter":{"id":"d54cd76d-d106-45b6-9a4e-d452655d894c","type":"CategoricalTickFormatter"},"plot":{"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"},"ticker":{"id":"d2db2e45-1009-4b7b-9af5-197de08dd618","type":"CategoricalTicker"}},"id":"f23b68ee-7ab5-4f1c-928f-d4cba8392ece","type":"CategoricalAxis"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"0ab7a86a-2fed-469b-87c1-144c4d466777","type":"HoverTool"}]},"id":"8d5d3336-4076-4c5c-8a85-284abe5ef329","type":"Toolbar"},{"attributes":{"fields":["Field Goal"]},"id":"d4af1c0c-3638-442f-91da-0fb41ec915a8","type":"Stack"},{"attributes":{"source":{"id":"a0aeeda3-058d-4026-97e5-f6722a01172b","type":"ColumnDataSource"}},"id":"752e09eb-0194-48bd-ab51-781155fb1c1c","type":"CDSView"},{"attributes":{"source":{"id":"35dd523d-4edf-43ae-8392-1433bd0737d8","type":"ColumnDataSource"}},"id":"95adf5db-3aba-4cfa-b1c7-30b5f90ec3ee","type":"CDSView"},{"attributes":{"label":{"value":"Penalty Stroke"},"renderers":[{"id":"5bb60673-5fa2-4102-a07e-38fae6dc57c3","type":"GlyphRenderer"}]},"id":"d6ddcd23-218d-4181-ad58-71281d7aad81","type":"LegendItem"},{"attributes":{"callback":null,"data":{"Field Goal":[10,15,5,14,8,11,22,14],"Field Goal Conversion":[4,9,1,9,4,9,14,10],"Penalty Corner":[1,7,2,4,0,7,12,2],"Penalty Stroke":[1,0,0,1,0,0,0,0],"PumpPlay bonus":[1,1,1,1,1,3,3,1],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"8adb5fe4-e6e4-4a3f-a5e5-6705f042be62","type":"Selection"},"selection_policy":{"id":"f27d4bd4-71b0-4a56-aec9-653cead7fa35","type":"UnionRenderers"}},"id":"35dd523d-4edf-43ae-8392-1433bd0737d8","type":"ColumnDataSource"},{"attributes":{},"id":"de12ec13-4fd6-41dc-9682-a532538440d7","type":"UnionRenderers"},{"attributes":{},"id":"47970a89-c522-46da-8539-6f26ba9b0366","type":"Selection"},{"attributes":{"source":{"id":"e9df3fb2-36ff-43ba-ba04-bdc88e577ab9","type":"ColumnDataSource"}},"id":"d41fc882-f64f-481a-bf9c-9933f9c29814","type":"CDSView"},{"attributes":{"bottom":{"expr":{"id":"f2fbf76e-4def-4c1a-9f3c-03edccddac5d","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"daec9054-57bd-411f-ba2f-8d1183dbb38e","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"196f1285-c4c3-481d-bcc9-7886dd0a0831","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"d4038815-7ba5-4e51-82c5-54e68c96dbe4","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"b75d23fb-7c7b-4010-a89a-a49e98b55b60","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"051b6dad-1ca6-48e4-8dd4-b7acd19e700d","type":"VBar"},{"attributes":{},"id":"e93ea55c-3c3b-4d36-98f4-91b9cbd1bfc3","type":"Selection"},{"attributes":{"dimension":1,"plot":{"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"},"ticker":{"id":"c38852ca-c32f-47c5-a328-337d2f0d9970","type":"BasicTicker"}},"id":"7305f42b-8412-4358-80e1-0b8cae074ac3","type":"Grid"},{"attributes":{},"id":"f27d4bd4-71b0-4a56-aec9-653cead7fa35","type":"UnionRenderers"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"8b53d175-71ce-4050-9471-6600a55c0372","type":"Stack"},{"attributes":{"items":[{"id":"086da33c-4b83-4e40-b31d-d10798682c2c","type":"LegendItem"},{"id":"0ae0f464-c47d-4d60-b7f8-584a188b31c9","type":"LegendItem"},{"id":"7e9f461c-f0e0-4c5f-8400-9268c643810e","type":"LegendItem"},{"id":"d6ddcd23-218d-4181-ad58-71281d7aad81","type":"LegendItem"},{"id":"908ff24c-9f29-4cbe-845c-7869f5c67da6","type":"LegendItem"}],"location":"top_left","plot":{"id":"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081","subtype":"Figure","type":"Plot"}},"id":"73f5ba4a-6059-4c6e-b958-2231dfb3f5f5","type":"Legend"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"6a6d1f7c-0892-47ba-9a55-82f799670466","type":"Stack"},{"attributes":{"label":{"value":"Field Goal"},"renderers":[{"id":"c2176614-dc7b-413f-ba69-9f0c125e42f0","type":"GlyphRenderer"}]},"id":"086da33c-4b83-4e40-b31d-d10798682c2c","type":"LegendItem"},{"attributes":{"callback":null,"data":{"Field Goal":[10,15,5,14,8,11,22,14],"Field Goal Conversion":[4,9,1,9,4,9,14,10],"Penalty Corner":[1,7,2,4,0,7,12,2],"Penalty Stroke":[1,0,0,1,0,0,0,0],"PumpPlay bonus":[1,1,1,1,1,3,3,1],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"e93ea55c-3c3b-4d36-98f4-91b9cbd1bfc3","type":"Selection"},"selection_policy":{"id":"578b2b8b-d853-438d-b24e-86669d9bafd5","type":"UnionRenderers"}},"id":"6e400ba3-2f06-4d59-8f4d-83ed86480c69","type":"ColumnDataSource"},{"attributes":{},"id":"fd303307-a1f3-49c7-9a65-111e64933cb5","type":"Selection"},{"attributes":{"source":{"id":"6e400ba3-2f06-4d59-8f4d-83ed86480c69","type":"ColumnDataSource"}},"id":"b54354b8-0018-4841-9304-8c485cf449fe","type":"CDSView"},{"attributes":{"bottom":{"expr":{"id":"f13c1c12-64c4-4c9a-84b8-4e9d17d61ec9","type":"Stack"}},"fill_color":{"value":"#FDE724"},"line_color":{"value":null},"top":{"expr":{"id":"c43a0aca-1819-46e7-82cc-821f688379a9","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"77210b5b-ac2d-4b84-a84e-0f8bfaa44ac8","type":"VBar"},{"attributes":{},"id":"4670adb3-400b-449e-8b23-d0fabf86015c","type":"BasicTickFormatter"},{"attributes":{"bottom":{"expr":{"id":"8a2e90e7-2f04-42d0-bbcc-b1e6a4d23688","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"d4af1c0c-3638-442f-91da-0fb41ec915a8","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"f468feb2-6d53-4bb0-b00b-1f1540e51791","type":"VBar"},{"attributes":{"plot":null,"text":"Men's competition: scoring action by team"},"id":"6697ecc3-480b-4ed0-906f-384a0b0bd42d","type":"Title"}],"root_ids":["f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081"]},"title":"Bokeh Application","version":"0.13.0"}};
+  var render_items = [{"docid":"13ab02df-4182-4776-9407-50eb8ff74e5a","roots":{"f4e7c4c2-4e12-47d1-aa32-c44c2e1ed081":"71bde5ad-6ed6-4755-ab71-fc5ced36d907"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;!-- collapse=True --&gt;</span>
+<span class="n">action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">womens</span><span class="p">[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">teams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">womens</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">teams</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">action</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">womens</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">])[</span><span class="s1">&#39;Action_txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">stacked_barchart</span><span class="p">(</span><span class="n">teams</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">teams</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">x_range</span><span class="o">=</span><span class="n">teams</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Women&#39;s competition: scoring action by team&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;$name @Team: @$name&quot;</span><span class="p">)</span>
+
+
+<span class="n">p</span><span class="o">.</span><span class="n">vbar_stack</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">source</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">action</span><span class="p">],</span> <span class="n">line_color</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;top_right&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Women&#39;s team&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span>
+
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="00a8e143-3f58-4636-823d-7f6dba66c463"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="c7949e73-47a3-47f3-a091-5577cd61472f"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#c7949e73-47a3-47f3-a091-5577cd61472f');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"0cea6b98-b732-45d0-95e3-b4627cf8bd9e":{"roots":{"references":[{"attributes":{"dimension":1,"plot":{"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"},"ticker":{"id":"790613e5-1ffa-4d37-88c6-caf7f70e571e","type":"BasicTicker"}},"id":"55ae5945-adf8-440c-b4ad-843a2d4dd596","type":"Grid"},{"attributes":{"label":{"value":"Penalty Stroke"},"renderers":[{"id":"95124346-8980-4088-819b-c8df918477f6","type":"GlyphRenderer"}]},"id":"4f014e09-9323-47e7-a029-4a27ad017db7","type":"LegendItem"},{"attributes":{},"id":"15c94f88-cc40-439a-8024-a3aacd4f738b","type":"LinearScale"},{"attributes":{"bottom":{"expr":{"id":"59032eca-273b-4696-944e-c2bd5e09e687","type":"Stack"}},"fill_color":{"value":"#5BC862"},"line_color":{"value":null},"top":{"expr":{"id":"b4233e4c-895f-4a45-a37e-733c13dd26de","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"2e6c4999-a6b2-4613-b548-add6401c9ada","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"ebb89eb1-e13e-49a7-97b6-212c24197fc1","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"68a69e2e-1e9e-4baa-b4fb-ecc3ede454ed","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"2147a860-1a89-4b44-9147-f2f3dbf87cd2","type":"VBar"},{"attributes":{"source":{"id":"fc09f50b-8086-4310-8bef-50ad6196a1d2","type":"ColumnDataSource"}},"id":"0391d720-d2e2-4074-9a1b-96e3db759b8e","type":"CDSView"},{"attributes":{},"id":"4171aa11-4709-4186-b79e-9ea97eedfb43","type":"UnionRenderers"},{"attributes":{},"id":"732246a3-324d-4df7-8cfe-a87512a20e94","type":"UnionRenderers"},{"attributes":{"fields":["Field Goal"]},"id":"387534dc-ede2-4d52-acaf-7aaef63309d3","type":"Stack"},{"attributes":{},"id":"18d16274-a50a-48fd-a14e-8b2cbbcd162b","type":"CategoricalTickFormatter"},{"attributes":{"callback":null,"factors":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"id":"604dc21d-25b0-42ba-91f4-d16f779f3fc4","type":"FactorRange"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"ebb89eb1-e13e-49a7-97b6-212c24197fc1","type":"Stack"},{"attributes":{"axis_label":"Women's team","formatter":{"id":"18d16274-a50a-48fd-a14e-8b2cbbcd162b","type":"CategoricalTickFormatter"},"plot":{"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"},"ticker":{"id":"5efd9fa8-a851-4f85-acfc-27d04cfa4ebc","type":"CategoricalTicker"}},"id":"a3137784-61f4-4c13-a242-ecdb85729219","type":"CategoricalAxis"},{"attributes":{"fields":["Field Goal","Field Goal Conversion"]},"id":"6cc1144f-9c08-485d-8f1c-9cb58be2e098","type":"Stack"},{"attributes":{"bottom":{"expr":{"id":"59032eca-273b-4696-944e-c2bd5e09e687","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"b4233e4c-895f-4a45-a37e-733c13dd26de","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"7a272229-aa8a-412b-9cf8-0a6043683715","type":"VBar"},{"attributes":{"data_source":{"id":"00881d2f-aad7-4bf0-a370-6f47da0a89fe","type":"ColumnDataSource"},"glyph":{"id":"06183cec-13a2-4d99-9a85-d0d869972dd3","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal","nonselection_glyph":{"id":"39a0378a-6e70-4666-81e9-e4c0fa954ae9","type":"VBar"},"selection_glyph":null,"view":{"id":"aba0611d-a585-45ed-93b7-49dd83cc8418","type":"CDSView"}},"id":"358587b2-44f9-4f49-8861-5725dee85b2c","type":"GlyphRenderer"},{"attributes":{"bottom":{"expr":{"id":"ebb89eb1-e13e-49a7-97b6-212c24197fc1","type":"Stack"}},"fill_color":{"value":"#208F8C"},"line_color":{"value":null},"top":{"expr":{"id":"68a69e2e-1e9e-4baa-b4fb-ecc3ede454ed","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"34fa2ac1-8bb5-4c82-9333-657f4f5fca9a","type":"VBar"},{"attributes":{"data_source":{"id":"ab5fd534-19e8-4ff6-8cea-0423dafc8a49","type":"ColumnDataSource"},"glyph":{"id":"2e6c4999-a6b2-4613-b548-add6401c9ada","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Stroke","nonselection_glyph":{"id":"7a272229-aa8a-412b-9cf8-0a6043683715","type":"VBar"},"selection_glyph":null,"view":{"id":"d53e3bf9-393a-40ca-bc44-78a1c0c9468c","type":"CDSView"}},"id":"95124346-8980-4088-819b-c8df918477f6","type":"GlyphRenderer"},{"attributes":{"axis_label":"Total","formatter":{"id":"01651380-625a-4989-9b0b-0f2d08d13b3e","type":"BasicTickFormatter"},"plot":{"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"},"ticker":{"id":"790613e5-1ffa-4d37-88c6-caf7f70e571e","type":"BasicTicker"}},"id":"68a6f3b8-ef4c-4f23-b147-8bad51389c9b","type":"LinearAxis"},{"attributes":{"below":[{"id":"a3137784-61f4-4c13-a242-ecdb85729219","type":"CategoricalAxis"}],"left":[{"id":"68a6f3b8-ef4c-4f23-b147-8bad51389c9b","type":"LinearAxis"}],"plot_height":500,"renderers":[{"id":"a3137784-61f4-4c13-a242-ecdb85729219","type":"CategoricalAxis"},{"id":"cfef9a78-ad52-46f1-aeb9-7b4ba71144e9","type":"Grid"},{"id":"68a6f3b8-ef4c-4f23-b147-8bad51389c9b","type":"LinearAxis"},{"id":"55ae5945-adf8-440c-b4ad-843a2d4dd596","type":"Grid"},{"id":"8bbe02a1-fab4-4114-8234-936d5ec31ac0","type":"Legend"},{"id":"358587b2-44f9-4f49-8861-5725dee85b2c","type":"GlyphRenderer"},{"id":"1601aeaf-edf0-48c2-bed3-4c63202f64dc","type":"GlyphRenderer"},{"id":"6a78fc10-602d-46b2-a414-37463378404d","type":"GlyphRenderer"},{"id":"95124346-8980-4088-819b-c8df918477f6","type":"GlyphRenderer"},{"id":"84c4c434-fdc0-471d-8221-01655075cfae","type":"GlyphRenderer"}],"title":{"id":"9273dc94-68b2-4f46-9b28-6257a9b6c53f","type":"Title"},"toolbar":{"id":"12206040-c38b-49c5-8dd4-21a69612f172","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"604dc21d-25b0-42ba-91f4-d16f779f3fc4","type":"FactorRange"},"x_scale":{"id":"8e7511a7-27fd-4e69-9f29-72400038964a","type":"CategoricalScale"},"y_range":{"id":"7204d067-b916-4b51-86fd-8c40162a665a","type":"DataRange1d"},"y_scale":{"id":"15c94f88-cc40-439a-8024-a3aacd4f738b","type":"LinearScale"}},"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"},{"attributes":{"plot":{"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"},"ticker":{"id":"5efd9fa8-a851-4f85-acfc-27d04cfa4ebc","type":"CategoricalTicker"}},"id":"cfef9a78-ad52-46f1-aeb9-7b4ba71144e9","type":"Grid"},{"attributes":{"source":{"id":"dfff2c57-e1a6-4e96-9329-af5600e94cdd","type":"ColumnDataSource"}},"id":"dc22c8c6-742a-4410-8dc0-3b7763ed4e02","type":"CDSView"},{"attributes":{},"id":"13624351-ede7-4471-9b5c-1e566c707885","type":"UnionRenderers"},{"attributes":{},"id":"3b0cc5bc-e93a-4289-b526-f13aa9238762","type":"Selection"},{"attributes":{},"id":"5efd9fa8-a851-4f85-acfc-27d04cfa4ebc","type":"CategoricalTicker"},{"attributes":{"callback":null,"data":{"Field Goal":[4,16,4,16,7,2,13,6],"Field Goal Conversion":[2,9,2,13,2,1,7,4],"Penalty Corner":[4,3,0,6,2,1,3,5],"Penalty Stroke":[0,0,0,5,0,0,4,1],"PumpPlay bonus":[1,2,0,4,2,0,1,3],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"290ee927-9aec-4530-b72d-e8b1e6514be8","type":"Selection"},"selection_policy":{"id":"89a739da-b7c5-47c5-a079-bf7284e39c84","type":"UnionRenderers"}},"id":"ab5fd534-19e8-4ff6-8cea-0423dafc8a49","type":"ColumnDataSource"},{"attributes":{"callback":null,"data":{"Field Goal":[4,16,4,16,7,2,13,6],"Field Goal Conversion":[2,9,2,13,2,1,7,4],"Penalty Corner":[4,3,0,6,2,1,3,5],"Penalty Stroke":[0,0,0,5,0,0,4,1],"PumpPlay bonus":[1,2,0,4,2,0,1,3],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"3b0cc5bc-e93a-4289-b526-f13aa9238762","type":"Selection"},"selection_policy":{"id":"13624351-ede7-4471-9b5c-1e566c707885","type":"UnionRenderers"}},"id":"dfff2c57-e1a6-4e96-9329-af5600e94cdd","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"dfff2c57-e1a6-4e96-9329-af5600e94cdd","type":"ColumnDataSource"},"glyph":{"id":"daf390f0-b8fe-4564-a038-3ce5c61eaeef","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Field Goal Conversion","nonselection_glyph":{"id":"4106493c-9a9b-4662-abe5-152a6ff9d168","type":"VBar"},"selection_glyph":null,"view":{"id":"dc22c8c6-742a-4410-8dc0-3b7763ed4e02","type":"CDSView"}},"id":"1601aeaf-edf0-48c2-bed3-4c63202f64dc","type":"GlyphRenderer"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"59032eca-273b-4696-944e-c2bd5e09e687","type":"Stack"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner"]},"id":"68a69e2e-1e9e-4baa-b4fb-ecc3ede454ed","type":"Stack"},{"attributes":{"bottom":{"expr":{"id":"a137e0a9-4a9e-4df4-af71-1c59368ecbd1","type":"Stack"}},"fill_color":{"value":"#FDE724"},"line_color":{"value":null},"top":{"expr":{"id":"9c697147-7c4e-485c-872f-b908143ab71e","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"c98c1909-f443-4ffd-90de-357daf6723ff","type":"VBar"},{"attributes":{"fields":[]},"id":"ab5e22ab-4076-448a-aad8-9eb872f0e43c","type":"Stack"},{"attributes":{},"id":"89a739da-b7c5-47c5-a079-bf7284e39c84","type":"UnionRenderers"},{"attributes":{"callback":null,"renderers":"auto","tooltips":"$name @Team: @$name"},"id":"1895cc1d-3d28-44f6-ba77-54d16938847b","type":"HoverTool"},{"attributes":{"callback":null,"data":{"Field Goal":[4,16,4,16,7,2,13,6],"Field Goal Conversion":[2,9,2,13,2,1,7,4],"Penalty Corner":[4,3,0,6,2,1,3,5],"Penalty Stroke":[0,0,0,5,0,0,4,1],"PumpPlay bonus":[1,2,0,4,2,0,1,3],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"394fa53d-d4dc-4195-97a9-634863d39519","type":"Selection"},"selection_policy":{"id":"83019d94-2d90-4cf8-a7fb-d86cbe63e8fb","type":"UnionRenderers"}},"id":"00881d2f-aad7-4bf0-a370-6f47da0a89fe","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"257db601-2db5-4006-8b8f-8c899854c6ce","type":"ColumnDataSource"},"glyph":{"id":"c98c1909-f443-4ffd-90de-357daf6723ff","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"PumpPlay bonus","nonselection_glyph":{"id":"7a1dd6a4-22a0-4efe-9788-683fac53e56d","type":"VBar"},"selection_glyph":null,"view":{"id":"682c8f82-fd56-4e19-ad85-02ed1c94714f","type":"CDSView"}},"id":"84c4c434-fdc0-471d-8221-01655075cfae","type":"GlyphRenderer"},{"attributes":{"data_source":{"id":"fc09f50b-8086-4310-8bef-50ad6196a1d2","type":"ColumnDataSource"},"glyph":{"id":"34fa2ac1-8bb5-4c82-9333-657f4f5fca9a","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"Penalty Corner","nonselection_glyph":{"id":"2147a860-1a89-4b44-9147-f2f3dbf87cd2","type":"VBar"},"selection_glyph":null,"view":{"id":"0391d720-d2e2-4074-9a1b-96e3db759b8e","type":"CDSView"}},"id":"6a78fc10-602d-46b2-a414-37463378404d","type":"GlyphRenderer"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"b4233e4c-895f-4a45-a37e-733c13dd26de","type":"Stack"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke"]},"id":"a137e0a9-4a9e-4df4-af71-1c59368ecbd1","type":"Stack"},{"attributes":{"plot":null,"text":"Women's competition: scoring action by team"},"id":"9273dc94-68b2-4f46-9b28-6257a9b6c53f","type":"Title"},{"attributes":{},"id":"8e7511a7-27fd-4e69-9f29-72400038964a","type":"CategoricalScale"},{"attributes":{"label":{"value":"PumpPlay bonus"},"renderers":[{"id":"84c4c434-fdc0-471d-8221-01655075cfae","type":"GlyphRenderer"}]},"id":"e8dfc2ad-d867-4fe1-9dc4-0dcf15df3499","type":"LegendItem"},{"attributes":{"callback":null},"id":"7204d067-b916-4b51-86fd-8c40162a665a","type":"DataRange1d"},{"attributes":{"callback":null,"data":{"Field Goal":[4,16,4,16,7,2,13,6],"Field Goal Conversion":[2,9,2,13,2,1,7,4],"Penalty Corner":[4,3,0,6,2,1,3,5],"Penalty Stroke":[0,0,0,5,0,0,4,1],"PumpPlay bonus":[1,2,0,4,2,0,1,3],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"7961f71b-305b-4b25-872d-af274852d9f3","type":"Selection"},"selection_policy":{"id":"4171aa11-4709-4186-b79e-9ea97eedfb43","type":"UnionRenderers"}},"id":"257db601-2db5-4006-8b8f-8c899854c6ce","type":"ColumnDataSource"},{"attributes":{},"id":"290ee927-9aec-4530-b72d-e8b1e6514be8","type":"Selection"},{"attributes":{"label":{"value":"Penalty Corner"},"renderers":[{"id":"6a78fc10-602d-46b2-a414-37463378404d","type":"GlyphRenderer"}]},"id":"08e05f40-40c2-4592-a1a2-d6f64d006906","type":"LegendItem"},{"attributes":{"label":{"value":"Field Goal Conversion"},"renderers":[{"id":"1601aeaf-edf0-48c2-bed3-4c63202f64dc","type":"GlyphRenderer"}]},"id":"4825cac0-bcac-4bd7-97ae-f494d70f8dc3","type":"LegendItem"},{"attributes":{"bottom":{"expr":{"id":"a137e0a9-4a9e-4df4-af71-1c59368ecbd1","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"9c697147-7c4e-485c-872f-b908143ab71e","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"7a1dd6a4-22a0-4efe-9788-683fac53e56d","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"387534dc-ede2-4d52-acaf-7aaef63309d3","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"6cc1144f-9c08-485d-8f1c-9cb58be2e098","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"4106493c-9a9b-4662-abe5-152a6ff9d168","type":"VBar"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1895cc1d-3d28-44f6-ba77-54d16938847b","type":"HoverTool"}]},"id":"12206040-c38b-49c5-8dd4-21a69612f172","type":"Toolbar"},{"attributes":{},"id":"01651380-625a-4989-9b0b-0f2d08d13b3e","type":"BasicTickFormatter"},{"attributes":{},"id":"394fa53d-d4dc-4195-97a9-634863d39519","type":"Selection"},{"attributes":{},"id":"7961f71b-305b-4b25-872d-af274852d9f3","type":"Selection"},{"attributes":{},"id":"fc1147c7-2209-4bdd-9dc9-d466df0f3dae","type":"Selection"},{"attributes":{"label":{"value":"Field Goal"},"renderers":[{"id":"358587b2-44f9-4f49-8861-5725dee85b2c","type":"GlyphRenderer"}]},"id":"63b17c43-fc4a-4c98-8e46-d3cd55b0e74e","type":"LegendItem"},{"attributes":{},"id":"83019d94-2d90-4cf8-a7fb-d86cbe63e8fb","type":"UnionRenderers"},{"attributes":{"source":{"id":"ab5fd534-19e8-4ff6-8cea-0423dafc8a49","type":"ColumnDataSource"}},"id":"d53e3bf9-393a-40ca-bc44-78a1c0c9468c","type":"CDSView"},{"attributes":{"source":{"id":"00881d2f-aad7-4bf0-a370-6f47da0a89fe","type":"ColumnDataSource"}},"id":"aba0611d-a585-45ed-93b7-49dd83cc8418","type":"CDSView"},{"attributes":{"bottom":{"expr":{"id":"387534dc-ede2-4d52-acaf-7aaef63309d3","type":"Stack"}},"fill_color":{"value":"#3B518A"},"line_color":{"value":null},"top":{"expr":{"id":"6cc1144f-9c08-485d-8f1c-9cb58be2e098","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"daf390f0-b8fe-4564-a038-3ce5c61eaeef","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"ab5e22ab-4076-448a-aad8-9eb872f0e43c","type":"Stack"}},"fill_color":{"value":"#440154"},"line_color":{"value":null},"top":{"expr":{"id":"73648a23-09f6-46b5-bc71-2ad1c60d9f03","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"06183cec-13a2-4d99-9a85-d0d869972dd3","type":"VBar"},{"attributes":{"fields":["Field Goal"]},"id":"73648a23-09f6-46b5-bc71-2ad1c60d9f03","type":"Stack"},{"attributes":{},"id":"790613e5-1ffa-4d37-88c6-caf7f70e571e","type":"BasicTicker"},{"attributes":{"items":[{"id":"63b17c43-fc4a-4c98-8e46-d3cd55b0e74e","type":"LegendItem"},{"id":"4825cac0-bcac-4bd7-97ae-f494d70f8dc3","type":"LegendItem"},{"id":"08e05f40-40c2-4592-a1a2-d6f64d006906","type":"LegendItem"},{"id":"4f014e09-9323-47e7-a029-4a27ad017db7","type":"LegendItem"},{"id":"e8dfc2ad-d867-4fe1-9dc4-0dcf15df3499","type":"LegendItem"}],"plot":{"id":"c803474f-4d9b-4c4a-b53d-4339dbf1517a","subtype":"Figure","type":"Plot"}},"id":"8bbe02a1-fab4-4114-8234-936d5ec31ac0","type":"Legend"},{"attributes":{"callback":null,"data":{"Field Goal":[4,16,4,16,7,2,13,6],"Field Goal Conversion":[2,9,2,13,2,1,7,4],"Penalty Corner":[4,3,0,6,2,1,3,5],"Penalty Stroke":[0,0,0,5,0,0,4,1],"PumpPlay bonus":[1,2,0,4,2,0,1,3],"Team":["ACT","NSW","NT","QLD","SA","TAS","VIC","WA"]},"selected":{"id":"fc1147c7-2209-4bdd-9dc9-d466df0f3dae","type":"Selection"},"selection_policy":{"id":"732246a3-324d-4df7-8cfe-a87512a20e94","type":"UnionRenderers"}},"id":"fc09f50b-8086-4310-8bef-50ad6196a1d2","type":"ColumnDataSource"},{"attributes":{"bottom":{"expr":{"id":"ab5e22ab-4076-448a-aad8-9eb872f0e43c","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"73648a23-09f6-46b5-bc71-2ad1c60d9f03","type":"Stack"}},"width":{"value":0.9},"x":{"field":"Team"}},"id":"39a0378a-6e70-4666-81e9-e4c0fa954ae9","type":"VBar"},{"attributes":{"fields":["Field Goal","Field Goal Conversion","Penalty Corner","Penalty Stroke","PumpPlay bonus"]},"id":"9c697147-7c4e-485c-872f-b908143ab71e","type":"Stack"},{"attributes":{"source":{"id":"257db601-2db5-4006-8b8f-8c899854c6ce","type":"ColumnDataSource"}},"id":"682c8f82-fd56-4e19-ad85-02ed1c94714f","type":"CDSView"}],"root_ids":["c803474f-4d9b-4c4a-b53d-4339dbf1517a"]},"title":"Bokeh Application","version":"0.13.0"}};
+  var render_items = [{"docid":"0cea6b98-b732-45d0-95e3-b4627cf8bd9e","roots":{"c803474f-4d9b-4c4a-b53d-4339dbf1517a":"00a8e143-3f58-4636-823d-7f6dba66c463"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And there you have it. Four different ways to say in one picture what three different bullet points conveyed. Easier to understand, easier to compare, and definitely nicer to look at!</p>
+<p>Next time, I'll take a crack at visualising <em>when</em> goals were scored.</p>
+
+</div>
+</div>
+</div>
+ 
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://username.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
