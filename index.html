@@ -1,33 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $("div.inner_cell:contains('# <!-- collapse=True -->')").prepend('<span style="font-weight: bold;">[+] Expand Code</span>')
+    $("div.inner_cell:contains('# <!-- collapse=False -->')").prepend('<span style="font-weight: bold;">[-] Collapse Code</span>')
+
+    $("div.inner_cell:contains('# <!-- collapse')").click(function () {
+    $header = $(this).children("span").first();
+    $codearea = $(this).children(".input_area");
+    console.log($(this).children());
+    $codearea.slideToggle(500, function () {
+        $header.text(function () {
+            return $codearea.is(":visible") ? "[-] Collapse Code" : "[+] Expand Code";
+        });
+    });
+    });
+    $("div.inner_cell:contains('# <!-- collapse=True -->')").find(".input_area").hide()
+
+});
+</script>
+
         <meta charset="utf-8" />
         <title>Adventures in sportsball data</title>
-        <link rel="stylesheet" href="http://username.github.io/theme/css/main.css" />
-        <link href="http://username.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in sportsball data Atom Feed" />
+        <link rel="stylesheet" href="/theme/css/main.css" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="http://username.github.io/">Adventures in sportsball data </a></h1>
+                <h1><a href="/">Adventures in sportsball data </a></h1>
                 <nav><ul>
-                    <li><a href="http://username.github.io/category/ahl.html">AHL</a></li>
+                    <li><a href="/category/ahl.html">AHL</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="http://username.github.io/Mucking around with stats from AHL.html">AHL Stats Part 1 - Scoring shots</a></h1>
+                    <h1 class="entry-title"><a href="/Mucking around with stats from AHL.html">AHL Stats Part 1 - Scoring shots</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2018-11-28T20:00:00+11:00">
                 Published: Wed 28 November 2018
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="http://username.github.io/author/aimz.html">Aimz</a>
+                By                         <a class="url fn" href="/author/aimz.html">Aimz</a>
         </address>
-<p>In <a href="http://username.github.io/category/ahl.html">AHL</a>.</p>
-<p>tags: <a href="http://username.github.io/tag/python-data.html">python data</a> </p>
+<p>In <a href="/category/ahl.html">AHL</a>.</p>
+<p>tags: <a href="/tag/python-data.html">python data</a> </p>
 </footer><!-- /.post-info --><style type="text/css">/*!
 *
 * IPython notebook
@@ -1272,10 +1294,10 @@ h6:hover .anchor-link {
 
 
 
-<div id="a3040d80-2693-4e59-8411-65a1865b92c3"></div>
+<div id="ce2f0f8d-570e-4fd0-a717-6ace632a83ed"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#a3040d80-2693-4e59-8411-65a1865b92c3');
+var element = $('#ce2f0f8d-570e-4fd0-a717-6ace632a83ed');
 
 (function(root) {
   function now() {
@@ -1885,10 +1907,10 @@ If you would like to see the code, click <a href="javascript:code_toggle()">here
 
 
 
-<div id="d70ffcbc-5651-4c33-8d48-3e52effe383b"></div>
+<div id="e4e04d49-b492-4c32-996a-3c06918e32a0"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d70ffcbc-5651-4c33-8d48-3e52effe383b');
+var element = $('#e4e04d49-b492-4c32-996a-3c06918e32a0');
 (function(root) {
   function embed_document(root) {
     
@@ -2005,10 +2027,10 @@ var element = $('#d70ffcbc-5651-4c33-8d48-3e52effe383b');
 
 
 
-<div id="9aa596a2-93ba-4b20-b3ce-6a386eb6d2d0"></div>
+<div id="0f15d940-2f1a-4655-9c20-ff3abe4e07c2"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#9aa596a2-93ba-4b20-b3ce-6a386eb6d2d0');
+var element = $('#0f15d940-2f1a-4655-9c20-ff3abe4e07c2');
 (function(root) {
   function embed_document(root) {
     
@@ -2124,10 +2146,10 @@ var element = $('#9aa596a2-93ba-4b20-b3ce-6a386eb6d2d0');
 
 
 
-<div id="54ad677a-7a8d-412c-9abd-79b900a78fbb"></div>
+<div id="5bbbb138-f268-43b7-ae9f-d09ad3b82a0b"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#54ad677a-7a8d-412c-9abd-79b900a78fbb');
+var element = $('#5bbbb138-f268-43b7-ae9f-d09ad3b82a0b');
 (function(root) {
   function embed_document(root) {
     
@@ -2250,10 +2272,10 @@ var element = $('#54ad677a-7a8d-412c-9abd-79b900a78fbb');
 
 
 
-<div id="5fecd339-24d0-4ca1-ba80-4d859002c36f"></div>
+<div id="e1f6f100-ab7a-48ba-a99d-a14256e1dfa0"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#5fecd339-24d0-4ca1-ba80-4d859002c36f');
+var element = $('#e1f6f100-ab7a-48ba-a99d-a14256e1dfa0');
 (function(root) {
   function embed_document(root) {
     
@@ -2352,10 +2374,10 @@ var element = $('#5fecd339-24d0-4ca1-ba80-4d859002c36f');
 
 
 
-<div id="c7949e73-47a3-47f3-a091-5577cd61472f"></div>
+<div id="a41574bf-9294-47e2-b4ad-b0ba714f9e01"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#c7949e73-47a3-47f3-a091-5577cd61472f');
+var element = $('#a41574bf-9294-47e2-b4ad-b0ba714f9e01');
 (function(root) {
   function embed_document(root) {
     
@@ -2445,7 +2467,6 @@ var element = $('#c7949e73-47a3-47f3-a091-5577cd61472f');
                 <div class="social">
                         <h2>social</h2>
                         <ul>
-                            <li><a href="http://username.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
                             <li><a href="#">You can add links in your config file</a></li>
                             <li><a href="#">Another social link</a></li>
