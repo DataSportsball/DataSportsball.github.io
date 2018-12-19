@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Adventures in sportsball data - AHL</title><link href="http://datasportsball.github.io/" rel="alternate"></link><link href="http://datasportsball.github.io/feeds/ahl.atom.xml" rel="self"></link><id>http://datasportsball.github.io/</id><updated>2018-12-18T20:00:00+11:00</updated><entry><title>AHL Stats Part 2 - Scoring time</title><link href="http://datasportsball.github.io/New%20post%20-%20timing!.html" rel="alternate"></link><published>2018-12-18T20:00:00+11:00</published><updated>2018-12-18T20:00:00+11:00</updated><author><name>Aimz</name></author><id>tag:datasportsball.github.io,2018-12-18:/New post - timing!.html</id><summary type="html">&lt;p&gt;Messing with the timing of goals&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Adventures in sportsball data - AHL</title><link href="https://datasportsball.github.io/" rel="alternate"></link><link href="https://datasportsball.github.io/feeds/ahl.atom.xml" rel="self"></link><id>https://datasportsball.github.io/</id><updated>2018-12-18T20:00:00+11:00</updated><entry><title>AHL Stats Part 2 - Scoring time</title><link href="https://datasportsball.github.io/New%20post%20-%20timing!.html" rel="alternate"></link><published>2018-12-18T20:00:00+11:00</published><updated>2018-12-18T20:00:00+11:00</updated><author><name>Aimz</name></author><id>tag:datasportsball.github.io,2018-12-18:/New post - timing!.html</id><summary type="html">&lt;p&gt;Messing with the timing of goals&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -2141,7 +2141,7 @@ an 8-0 thrashing and a 4-4 draw. So, how did the total goals compare to the winn
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python data"></category></entry><entry><title>AHL Stats Part 1 - Scoring shots</title><link href="http://datasportsball.github.io/Mucking%20around%20with%20stats%20from%20AHL.html" rel="alternate"></link><published>2018-11-28T20:00:00+11:00</published><updated>2018-11-28T20:00:00+11:00</updated><author><name>Aimz</name></author><id>tag:datasportsball.github.io,2018-11-28:/Mucking around with stats from AHL.html</id><summary type="html">&lt;p&gt;Different ways of visualising scoring data from AHL&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="python data"></category></entry><entry><title>AHL Stats Part 1 - Scoring shots</title><link href="https://datasportsball.github.io/Mucking%20around%20with%20stats%20from%20AHL.html" rel="alternate"></link><published>2018-11-28T20:00:00+11:00</published><updated>2018-11-28T20:00:00+11:00</updated><author><name>Aimz</name></author><id>tag:datasportsball.github.io,2018-11-28:/Mucking around with stats from AHL.html</id><summary type="html">&lt;p&gt;Different ways of visualising scoring data from AHL&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -3385,10 +3385,10 @@ h6:hover .anchor-link {
 
 
 
-&lt;div id="fb5bebf3-d5d5-4258-a4ad-101631d67569"&gt;&lt;/div&gt;
+&lt;div id="f21249ef-275d-45ea-9131-7d636abef21f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#fb5bebf3-d5d5-4258-a4ad-101631d67569');
+var element = $('#f21249ef-275d-45ea-9131-7d636abef21f');
 
 (function(root) {
   function now() {
@@ -3998,10 +3998,10 @@ If you would like to see the code, click &lt;a href="javascript:code_toggle()"&g
 
 
 
-&lt;div id="2983753e-4b57-4415-938c-e52938af84c6"&gt;&lt;/div&gt;
+&lt;div id="750f0351-5ead-4988-9bc5-113b0a01e895"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#2983753e-4b57-4415-938c-e52938af84c6');
+var element = $('#750f0351-5ead-4988-9bc5-113b0a01e895');
 (function(root) {
   function embed_document(root) {
     
@@ -4118,10 +4118,10 @@ var element = $('#2983753e-4b57-4415-938c-e52938af84c6');
 
 
 
-&lt;div id="a9c6386a-2572-49d8-a818-dc49b6ae5d19"&gt;&lt;/div&gt;
+&lt;div id="4a429f83-7322-49d4-805a-dbcb567baf53"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#a9c6386a-2572-49d8-a818-dc49b6ae5d19');
+var element = $('#4a429f83-7322-49d4-805a-dbcb567baf53');
 (function(root) {
   function embed_document(root) {
     
@@ -4237,10 +4237,10 @@ var element = $('#a9c6386a-2572-49d8-a818-dc49b6ae5d19');
 
 
 
-&lt;div id="218b78e8-551d-4f53-9051-46987ea1f613"&gt;&lt;/div&gt;
+&lt;div id="587cfc8b-025e-4ff2-b031-d7cb6c1430c0"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#218b78e8-551d-4f53-9051-46987ea1f613');
+var element = $('#587cfc8b-025e-4ff2-b031-d7cb6c1430c0');
 (function(root) {
   function embed_document(root) {
     
@@ -4363,10 +4363,10 @@ var element = $('#218b78e8-551d-4f53-9051-46987ea1f613');
 
 
 
-&lt;div id="71582388-8afa-4b25-8d05-bc8b1fe5afb3"&gt;&lt;/div&gt;
+&lt;div id="d8aefaae-006b-43ba-b406-887233bf57d6"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#71582388-8afa-4b25-8d05-bc8b1fe5afb3');
+var element = $('#d8aefaae-006b-43ba-b406-887233bf57d6');
 (function(root) {
   function embed_document(root) {
     
@@ -4465,10 +4465,10 @@ var element = $('#71582388-8afa-4b25-8d05-bc8b1fe5afb3');
 
 
 
-&lt;div id="23dffcc4-5362-40c3-be4c-4dbf44a9537e"&gt;&lt;/div&gt;
+&lt;div id="7de125f1-4cb1-4cc5-9c62-a4a5bfe8a118"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#23dffcc4-5362-40c3-be4c-4dbf44a9537e');
+var element = $('#7de125f1-4cb1-4cc5-9c62-a4a5bfe8a118');
 (function(root) {
   function embed_document(root) {
     
